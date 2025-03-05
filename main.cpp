@@ -1,40 +1,48 @@
+// Author: Miquel Galiana Llorca
+// Project: Larian Test
+
 #include <iostream>
 #include <raylib.h>
 
+#include "Map.h"
+
+// Resources
+// ------------------------------------------------------------------
+// https://www.raylib.com/index.html
+// https://github.com/educ8s/Raylib-CPP-Starter-Template-for-VSCODE
+// ------------------------------------------------------------------
+
+// ------------------------------------------------------------------
 int main ()
 {
-	const int SCREEN_WIDTH = 800;
-	const int SCREEN_HEIGHT = 600;
+	const float UPDATE_TIME = 0.15;
 
-	int ball_x = 100;
-	int ball_y = 100;
-	int ball_speed_x = 5;
-	int ball_speed_y = 5;
-	int ball_radius = 15;
+	// Set startup map
+	Map currentMap;
+	if (!currentMap.LoadMap("resources/arena.xml"))
+	{
+		// Error: couldn't load map
+		return 0;
+	}
+	currentMap.OnInit();
 
-	std::cout << "Hello World" << std::endl;
-
-	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "My first RAYLIB program!");
-	SetTargetFPS(60);
-
+	// Main loop of the application
+	float lastUpdateTime = 0.f;
+	float lastRenderTime = 0.f;
 	while (!WindowShouldClose())
 	{
-		ball_x += ball_speed_x;
-		ball_y += ball_speed_y;
-		if (ball_x + ball_radius >= SCREEN_WIDTH || ball_x - ball_radius <= 0)
+		// Update all components on all entities
+		const float currentTime = 0.f;
+		const float updateDeltaTime = currentTime - lastUpdateTime;
+		if (updateDeltaTime >= UPDATE_TIME)
 		{
-			ball_speed_x *= -1;
+			currentMap.Update(updateDeltaTime);
+			lastUpdateTime = currentTime;
 		}
-		if (ball_y + ball_radius >= SCREEN_HEIGHT || ball_y - ball_radius <= 0)
-		{
-			ball_speed_y *= -1;
-		}
-		BeginDrawing();
 
-		ClearBackground(BLACK);
-		DrawCircle(ball_x,ball_y,ball_radius, WHITE);
-
-		EndDrawing();
+		// Render graphics, animations, etc.
+		const float renderDeltaTime = currentTime - lastRenderTime;
+		currentMap.Render(renderDeltaTime);
 	}
 
 	CloseWindow();
