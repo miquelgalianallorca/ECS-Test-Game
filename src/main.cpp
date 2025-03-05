@@ -1,9 +1,7 @@
 // Author: Miquel Galiana Llorca
 // Project: Larian Test
 
-#include <iostream>
 #include <raylib.h>
-
 #include "Map.h"
 
 // Resources

@@ -5,7 +5,7 @@
 
 #include <vector>
 
-#include "EntityComponentSystem/CEntity.h"
+#include "CEntity.h"
 
 //------------------------------------------------------------------
 class Map
