@@ -16,17 +16,6 @@ using json = nlohmann::json;
 bool Map::LoadMap(const char* fileName)
 {
 	std::ifstream iss(fileName);
-
-	 // Variable to store each line from the file
-	// std::string line;
-	 // Read each line from the file and print it
-	// while (std::getline(iss, line))
-	// {
-	//		// Process each line as needed
-	//		std::cout << line << std::endl;
-	 //}
-
-
 	json data = json::parse(iss);
 
 	// Map is an array of entities
@@ -40,17 +29,17 @@ bool Map::LoadMap(const char* fileName)
 
 		// Entities must have a transform (pos, rot)
 		assert(entity.contains("pos"));
-		assert(entity["pos"].is_array());
-		assert(entity["pos"].size() == 2);
-		assert(entity["pos"][0].is_number_float());
-		assert(entity["pos"][1].is_number_float());
+		assert(entity["pos"].contains("x"));
+		assert(entity["pos"].contains("y"));
+		assert(entity["pos"]["x"].is_number_float());
+		assert(entity["pos"]["y"].is_number_float());
 
 		assert(entity.contains("rot"));
 		assert(entity["rot"].is_number_float());
 		CEntity::STransform transform
 		{
-			entity["pos"][0], // pos.x
-			entity["pos"][1], // pos.y
+			entity["pos"]["x"], // pos.x
+			entity["pos"]["y"], // pos.y
 			entity["rot"],    // rot
 		};
 
