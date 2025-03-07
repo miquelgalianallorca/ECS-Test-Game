@@ -10,10 +10,9 @@
 #define LogEntityError(str) std::cerr << str << " - " << m_name.c_str() << "[" << m_entityId << "]" << std::endl
 
 //------------------------------------------------------------------
-CEntity::CEntity(EntityId entityId, std::string&& name, STransform&& transform)
+CEntity::CEntity(EntityId entityId, std::string&& name)
 	: m_entityId(entityId)
 	, m_name(name)
-	, m_transform(transform)
 {}
 
 //------------------------------------------------------------------
@@ -51,6 +50,12 @@ EntityId CEntity::GetEntityId() const
 }
 
 //------------------------------------------------------------------
+const std::string& CEntity::GetName() const
+{
+	return m_name;
+}
+
+//------------------------------------------------------------------
 void CEntity::Update(const float& deltaTime)
 {
 	// Handle events queued to entity
@@ -80,6 +85,17 @@ void CEntity::Render(const float& deltaTime)
 		}
 		pComponent->Render(deltaTime);
 	}
+}
+
+//------------------------------------------------------------------
+void CEntity::AddComponent(std::shared_ptr<IComponent> pComponent)
+{
+	if (!pComponent)
+	{
+		LogEntityError("CEntity::AddComponent - Invalid component");
+		return;
+	}
+	m_components.push_back(pComponent);
 }
 
 #undef LogEntityDebug

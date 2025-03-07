@@ -16,15 +16,7 @@ typedef unsigned int EntityId;
 class CEntity
 {
 public:
-	struct STransform
-	{
-		float posX{ 0.f };
-		float posY{ 0.f };
-		float rot{ 0.f };
-		// Scale?
-	};
-
-	CEntity(EntityId entityId, std::string&& name, STransform&& transform);
+	CEntity(EntityId entityId, std::string&& name);
 
 	void OnInit();
 	void OnDone();
@@ -32,16 +24,18 @@ public:
 	void Render(const float& deltaTime);
 
 	EntityId GetEntityId() const;
+	const std::string& GetName() const;
+
+	void AddComponent(std::shared_ptr<IComponent> pComponent);
 
 private:
 	EntityId m_entityId{ 0 };
 	std::string m_name;
 
-	// Improvement: Make transform a component (always mandatory)
-	STransform m_transform;
-
-	// In a pure ECS an Entity is just an ID associated to a collection of components
-	// A System operates only on Entities that have all the components the system needs
+	// In a pure ECS an Entity is just an ID associated to a collection of components, it has no logic
+	// Entity: just an Id
+	// Component: just data
+	// System: logic for a group of components, only on Entities that have all the components the system needs
 	std::vector<std::shared_ptr<IComponent>> m_components;
 };
 

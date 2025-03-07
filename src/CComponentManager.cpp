@@ -6,22 +6,28 @@
 
 #include <assert.h>
 
-//-------------------------------------------------------------------
-// Initialize static members
-std::unordered_map<std::string, std::function<IComponent*(const std::string&)>> CComponentManager::m_componentLoadingFunctions = {};
-
 //------------------------------------------------------------------
-void CComponentManager::RegisterComponentLoadingFunction(const std::string& componentName, const std::function<IComponent*(const std::string&)>& function)
+CComponentManager& CComponentManager::GetInstance()
 {
-	// Don't register the same component more than once
-	//const auto itFunctions = m_componentLoadingFunctions.find(componentName);
-	//assert(itFunctions == m_componentLoadingFunctions.end());
-
-	//CComponentManager::m_componentLoadingFunctions.emplace(componentName, function);
+	static CComponentManager instance;
+	return instance;
 }
 
 //------------------------------------------------------------------
-IComponent* CComponentManager::LoadComponentFromJson(const std::string& componentName, const std::string& json)
+void CComponentManager::RegisterComponentLoadingFunction(const std::string& componentName, const TComponentLoadingFunctor&& function)
 {
-	return nullptr;
+	// Don't register the same component more than once
+	const auto itFunctions = m_componentLoadingFunctions.find(componentName);
+	assert(itFunctions == m_componentLoadingFunctions.end());
+
+	CComponentManager::m_componentLoadingFunctions.emplace(componentName, std::move(function));
+}
+
+//------------------------------------------------------------------
+std::shared_ptr<IComponent> CComponentManager::LoadComponentFromJson(const std::string& componentName, const std::string& json)
+{
+	const auto itFunctions = m_componentLoadingFunctions.find(componentName);
+	assert(itFunctions != m_componentLoadingFunctions.end());
+
+	return itFunctions->second(json);
 }

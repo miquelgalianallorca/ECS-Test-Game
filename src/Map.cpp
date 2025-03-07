@@ -2,21 +2,43 @@
 // Project: Larian Test
 
 #include "Map.h"
+#include "CComponentManager.h"
 #include "CEntity.h"
+#include "IComponent.h"
 #include "json.hpp"
+
+#include "CComponentTransform.h"
 
 #include <assert.h> // for assert
 #include <iostream>
 #include <fstream>  // for std::ifstream
 #include <raylib.h> // for Drawing on screen (Improvement: Access library via interface)
 
+#define LogLoadDebug(str, entityName) std::cout << str << " - Entity: " << entityName << std::endl
+#define LogLoadError(str, entityName, componentName) std::cerr << str << " - Component: " << componentName << ", Entity: " << entityName << std::endl
+
 using json = nlohmann::json;
+
+//------------------------------------------------------------------
+Map::Map()
+{
+	CComponentManager& componentManager = CComponentManager::GetInstance();
+
+	// Register all data loading functions into the component manager singleton
+	// Improvement: Move this out of Map.cpp to avoid having all the component includes here
+	componentManager.RegisterComponentLoadingFunction("transform", [](const std::string& data){ return CComponentTransform::LoadComponentFromJson(data); });
+	//componentManager.RegisterComponentLoadingFunction("collider", [](const std::string& data){ return nullptr; });
+	//componentManager.RegisterComponentLoadingFunction("shape", [](const std::string& data){ return nullptr; });
+	// ...
+}
 
 //------------------------------------------------------------------
 bool Map::LoadMap(const char* fileName)
 {
 	std::ifstream iss(fileName);
 	json data = json::parse(iss);
+
+	CComponentManager& componentManager = CComponentManager::GetInstance();
 
 	// Map is an array of entities
 	EntityId entityIndex = 0;
@@ -27,33 +49,28 @@ bool Map::LoadMap(const char* fileName)
 		assert(entity["name"].is_string());
 		std::string entityName = entity["name"];
 
-		// Entities must have a transform (pos, rot)
-		assert(entity.contains("pos"));
-		assert(entity["pos"].contains("x"));
-		assert(entity["pos"].contains("y"));
-		assert(entity["pos"]["x"].is_number_float());
-		assert(entity["pos"]["y"].is_number_float());
-
-		assert(entity.contains("rot"));
-		assert(entity["rot"].is_number_float());
-		CEntity::STransform transform
-		{
-			entity["pos"]["x"], // pos.x
-			entity["pos"]["y"], // pos.y
-			entity["rot"],    // rot
-		};
-
 		// Entities must have an array of components
 		assert(entity.contains("components"));
 		assert(entity["components"].is_array());
 
-		CEntity newEntity(++entityIndex, std::move(entityName), std::move(transform));
+		CEntity newEntity(++entityIndex, std::move(entityName));
 		for (const auto& component : entity["components"])
 		{
-			assert(component.contains("class"));
-			assert(component["class"].is_string());
-			const std::string className = component["class"];
+			assert(component.contains("name"));
+			assert(component["name"].is_string());
+			const std::string componentName = component["name"];
 
+			std::shared_ptr<IComponent> pComponent = componentManager.LoadComponentFromJson(componentName, component.dump());
+			if (!pComponent)
+			{
+				LogLoadError("Failed to load Component", newEntity.GetName(), componentName);
+				continue;
+			}
+
+			newEntity.AddComponent(pComponent);
+			LogLoadDebug("Component loaded", newEntity.GetName());
+
+			/*
 			// Improvement: Registering components to avoid switch here
 			if (className == "collider")
 			{
@@ -94,12 +111,11 @@ bool Map::LoadMap(const char* fileName)
 				// getting somewhere? time limit? kill X enemies?
 				// ...
 			}
-			// ...
+			*/
 		}
 
 		m_entities.emplace_back(std::move(newEntity));
 	}
-	// ...
 
 	iss.close();
 	return true;

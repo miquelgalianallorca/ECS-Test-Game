@@ -11,7 +11,7 @@
 class Map
 {
 public:
-	Map() = default;
+	Map();
 
 	// Load entities/components in map from xml/json data
 	bool LoadMap(const char* fileName);

@@ -2,12 +2,9 @@
 	"entity":
 	{
 			"name": "TestEntity",
-			"pos": { "x": 0.0, "y": 0.0 },
-			"rot": 0.0,
 			"components":
 			[
-				{ "class": "collider", "b": 1.0 },
-				{	"class": "shape", "c": 2.0 }
+				{ "name": "transform", "posX": 0.0, "posY": 0.0, "rot": 0.0 }
 			]
 	}
 }
