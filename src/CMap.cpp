@@ -1,7 +1,7 @@
 // Author: Miquel Galiana Llorca
 // Project: Larian Test
 
-#include "Map.h"
+#include "CMap.h"
 #include "CComponentCollider.h"
 #include "CComponentManager.h"
 #include "CComponentRenderable.h"
@@ -22,7 +22,7 @@
 using json = nlohmann::json;
 
 //------------------------------------------------------------------
-Map::Map()
+CMap::CMap()
 {
 	CComponentManager& componentManager = CComponentManager::GetInstance();
 
@@ -35,7 +35,7 @@ Map::Map()
 }
 
 //------------------------------------------------------------------
-bool Map::LoadMap(const char* fileName)
+bool CMap::LoadMap(const char* fileName)
 {
 	std::ifstream iss(fileName);
 	json data = json::parse(iss);
@@ -124,7 +124,7 @@ bool Map::LoadMap(const char* fileName)
 }
 
 //------------------------------------------------------------------
-void Map::OnInit()
+void CMap::OnInit()
 {
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Larian Test");
 	SetTargetFPS(60);
@@ -136,7 +136,7 @@ void Map::OnInit()
 }
 
 //------------------------------------------------------------------
-void Map::OnDone()
+void CMap::OnDone()
 {
 	for (CEntity& entity : m_entities)
 	{
@@ -145,7 +145,7 @@ void Map::OnDone()
 }
 
 //------------------------------------------------------------------
-void Map::Update(const float& deltaTime)
+void CMap::Update(const float& deltaTime)
 {
 	for (CEntity& entity : m_entities)
 	{
@@ -154,7 +154,7 @@ void Map::Update(const float& deltaTime)
 }
 
 //------------------------------------------------------------------
-void Map::Render(const float& deltaTime)
+void CMap::Render(const float& deltaTime)
 {
 	BeginDrawing();
 	ClearBackground(BLACK);

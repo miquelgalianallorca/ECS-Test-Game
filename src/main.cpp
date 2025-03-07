@@ -1,7 +1,7 @@
 // Author: Miquel Galiana Llorca
 // Project: Larian Test
 
-#include "Map.h"
+#include "CMap.h"
 
 #include <iostream>
 #include <raylib.h>
@@ -26,7 +26,7 @@ int main ()
 	const float UPDATE_TIME = 0.15;
 
 	// Set startup map
-	Map currentMap;
+	CMap currentMap;
 	if (!currentMap.LoadMap("resources/arena.json"))
 	{
 		LogError("Initial map not loaded");
