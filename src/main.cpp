@@ -2,6 +2,7 @@
 // Project: Larian Test
 
 #include "CMap.h"
+#include "CGame.h"
 
 #include <iostream>
 #include <raylib.h>
@@ -25,6 +26,10 @@ int main ()
 {
 	const float UPDATE_TIME = 0.15;
 
+	// Init game singleton
+	CGame& game = CGame::GetInstance();
+	game.Init();
+	
 	// Set startup map
 	CMap currentMap;
 	if (!currentMap.LoadMap("resources/arena.json"))
