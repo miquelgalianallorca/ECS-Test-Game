@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include "CComponentManager.h"
+
 #include <memory> // for std::shared_ptr
 
 //------------------------------------------------------------------
@@ -16,6 +18,9 @@ public:
 	// Create game systems
 	void Init();
 
+	// Access game systems
+	CComponentManager& GetComponentManager();
+
 private:
 	// Singleton pattern: No copying, assigning or creating more instances
 	CGame() = default;
@@ -24,9 +29,15 @@ private:
 	CGame& operator=(const CGame&) = delete;
 	CGame& operator=(CGame&&) = delete;
 
+	// Handles loading components from data
+	CComponentManager m_componentManager;
+
 	//CGraphicsSystem m_graphicsSystem;
 	//CPhysicsSystem m_physicsSystem;
+
+	// Handles loading maps, switching maps, async loading?
 	//CMapManager m_mapManager;
+
+	// Handles mouse & keyboard input
 	//CInputManager m_inputManager;
-	//CComponentManager m_componentManager;
 };

@@ -16,21 +16,16 @@ typedef std::function<std::shared_ptr<IComponent>(const std::string&)> TComponen
 class CComponentManager
 {
 public:
-	// Singleton pattern
-	static CComponentManager& GetInstance();
-	CComponentManager(const CComponentManager&) = delete;
-	CComponentManager(CComponentManager&&) = delete;
-	CComponentManager& operator=(const CComponentManager&) = delete;
-	CComponentManager& operator=(CComponentManager&&) = delete;
+	// Register all component loading functions
+	void Init();
 
-	// every component registration should register itself to the singleton with its static function for resolving a json
+	// All components must be registered with their static function for resolving a Json
 	void RegisterComponentLoadingFunction(const std::string& componentName, const TComponentLoadingFunctor&& function);
 
+	// Create a component from Json data
 	std::shared_ptr<IComponent> LoadComponentFromJson(const std::string& componentName, const std::string& json);
 
 private:
-	CComponentManager() = default;
-
 	// Map of [componentName, loadingFunction] used to create a component from Json data
 	std::unordered_map<std::string, TComponentLoadingFunctor> m_componentLoadingFunctions;
 };

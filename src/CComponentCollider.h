@@ -37,4 +37,5 @@ private:
 	
 	std::shared_ptr<IShape> m_pShape;
 	// TO DO - offsetX, offsetY
+	// TO DO - mass and acceleration? Turn into rigidbody?
 };

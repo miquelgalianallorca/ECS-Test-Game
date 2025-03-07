@@ -2,14 +2,10 @@
 // Project: Larian Test
 
 #include "CMap.h"
-#include "CComponentCollider.h"
-#include "CComponentManager.h"
-#include "CComponentRenderable.h"
+#include "CGame.h"
 #include "CEntity.h"
 #include "IComponent.h"
 #include "json.hpp"
-
-#include "CComponentTransform.h"
 
 #include <assert.h> // for assert
 #include <iostream>
@@ -22,25 +18,16 @@
 using json = nlohmann::json;
 
 //------------------------------------------------------------------
-CMap::CMap()
-{
-	CComponentManager& componentManager = CComponentManager::GetInstance();
-
-	// Register all data loading functions into the component manager singleton
-	// Improvement: Move this out of Map.cpp to avoid having all the component includes here
-	componentManager.RegisterComponentLoadingFunction("transform", [](const std::string& data){ return CComponentTransform::LoadComponentFromJson(data); });
-	componentManager.RegisterComponentLoadingFunction("collider", [](const std::string& data){ return CComponentCollider::LoadComponentFromJson(data); });
-	componentManager.RegisterComponentLoadingFunction("renderable", [](const std::string& data){ return CComponentRenderable::LoadComponentFromJson(data); });
-	// ...
-}
-
-//------------------------------------------------------------------
 bool CMap::LoadMap(const char* fileName)
 {
 	std::ifstream iss(fileName);
 	json data = json::parse(iss);
+	if (data.empty())
+	{
+		return false;
+	}
 
-	CComponentManager& componentManager = CComponentManager::GetInstance();
+	CComponentManager& componentManager = CGame::GetInstance().GetComponentManager();
 
 	// Map is an array of entities
 	EntityId entityIndex = 0;
@@ -73,23 +60,6 @@ bool CMap::LoadMap(const char* fileName)
 			LogLoadDebug("Component loaded", newEntity.GetName());
 
 			/*
-			// Improvement: Registering components to avoid switch here
-			if (className == "collider")
-			{
-				// pos, rot
-				// size?
-				// isBlocking (allows moving through)
-				// mass (-1 immovable)
-				// ...
-			}
-			else if (className == "shape")
-			{
-				// renderables - square or circle?
-				// pos, rot
-				// size? radius?
-				// offset (from entity transform)
-				// ...
-			}
 			else if (className == "actor")
 			{
 				// health, speed
