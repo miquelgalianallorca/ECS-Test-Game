@@ -5,8 +5,14 @@
 			"components":
 			[
 				{ "name": "transform", "posX": 0.0, "posY": 0.0, "rot": 0.0 },
-				{ "name": "collider",   "type": "rect", "offsetX": 0, "offsetY": 0, "sizeX": 10, "sizeY": 10 },
-				{	"name": "renderable", "type": "rect", "offsetX": 0, "offsetY": 0, "sizeX": 10, "sizeY": 10, "r": 255, "g": 0, "b": 0, "a": 255 }
+				{
+					"name": "collider", "offsetX": 0.0, "offsetY": 0.0, "velocityX": 0.0, "velocityY": 0.0 ,
+					"shape": { "type": "rectangle", "sizeX": 10.0, "sizeY": 10.0 }
+				},
+				{
+					"name": "renderable",  "offsetX": 0.0, "offsetY": 0.0,  "r": 255, "g": 0, "b": 0, "a": 255, "layer": 0,
+					"shape": { "type": "rectangle", "sizeX": 10.0, "sizeY": 10.0 }
+				}
 			]
 	}
 }

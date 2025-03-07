@@ -8,8 +8,11 @@
 
 // Resources
 // ------------------------------------------------------------------
+// Raylib (Graphics library)
 // https://www.raylib.com/index.html
 // https://github.com/educ8s/Raylib-CPP-Starter-Template-for-VSCODE
+//
+// JSON parser
 // https://github.com/nlohmann/json
 // ------------------------------------------------------------------
 

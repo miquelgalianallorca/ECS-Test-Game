@@ -2,7 +2,9 @@
 // Project: Larian Test
 
 #include "Map.h"
+#include "CComponentCollider.h"
 #include "CComponentManager.h"
+#include "CComponentRenderable.h"
 #include "CEntity.h"
 #include "IComponent.h"
 #include "json.hpp"
@@ -27,8 +29,8 @@ Map::Map()
 	// Register all data loading functions into the component manager singleton
 	// Improvement: Move this out of Map.cpp to avoid having all the component includes here
 	componentManager.RegisterComponentLoadingFunction("transform", [](const std::string& data){ return CComponentTransform::LoadComponentFromJson(data); });
-	//componentManager.RegisterComponentLoadingFunction("collider", [](const std::string& data){ return nullptr; });
-	//componentManager.RegisterComponentLoadingFunction("shape", [](const std::string& data){ return nullptr; });
+	componentManager.RegisterComponentLoadingFunction("collider", [](const std::string& data){ return CComponentCollider::LoadComponentFromJson(data); });
+	componentManager.RegisterComponentLoadingFunction("renderable", [](const std::string& data){ return CComponentRenderable::LoadComponentFromJson(data); });
 	// ...
 }
 
