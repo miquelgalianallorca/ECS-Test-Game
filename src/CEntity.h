@@ -42,8 +42,3 @@ private:
 // TO DO: Add systems
 // graphics system: needs transform and shape components
 // physics system: needs transform and collider/rigidbody components
-
-// component manager singleton
-// all components add themselves to the singleton (via macro?)
-// unordered map of [componentName, &loadFromJsonFunction(json)]
-// then the map can do load(componentName) and get an IComponent* from he loadFromJsonFunction when reading data from the file

@@ -179,3 +179,6 @@ void Map::Render(const float& deltaTime)
 
 	EndDrawing();
 }
+
+#undef LogLoadDebug
+#undef LogLoadError

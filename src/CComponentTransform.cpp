@@ -9,24 +9,6 @@
 
 using json = nlohmann::json;
 
-//CComponentManager::RegisterComponentLoadingFunction("transform", nullptr);
-
-//-------------------------------------------------------------------
-void CComponentTransform::OnInit()
-{}
-
-//-------------------------------------------------------------------
-void CComponentTransform::OnDone()
-{}
-
-//-------------------------------------------------------------------
-void CComponentTransform::Update(const float& deltaTime)
-{}
-
-//-------------------------------------------------------------------
-void CComponentTransform::Render(const float& deltaTime)
-{}
-
 //-------------------------------------------------------------------
 void CComponentTransform::SetPos(const float& posX, const float& posY)
 {

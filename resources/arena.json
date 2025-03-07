@@ -4,7 +4,9 @@
 			"name": "TestEntity",
 			"components":
 			[
-				{ "name": "transform", "posX": 0.0, "posY": 0.0, "rot": 0.0 }
+				{ "name": "transform", "posX": 0.0, "posY": 0.0, "rot": 0.0 },
+				{ "name": "collider",   "type": "rect", "offsetX": 0, "offsetY": 0, "sizeX": 10, "sizeY": 10 },
+				{	"name": "renderable", "type": "rect", "offsetX": 0, "offsetY": 0, "sizeX": 10, "sizeY": 10, "r": 255, "g": 0, "b": 0, "a": 255 }
 			]
 	}
 }
