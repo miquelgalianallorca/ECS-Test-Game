@@ -1,7 +1,7 @@
 // Author: Miquel Galiana Llorca
 // Project: Larian Test
 
-#include "CComponentManager.h"
+#include "CComponentDataLoader.h"
 #include "SComponentCollider.h"
 #include "SComponentRenderable.h"
 #include "SComponentTransform.h"
@@ -11,7 +11,7 @@
 #include <assert.h>
 
 //------------------------------------------------------------------
-void CComponentManager::Init()
+void CComponentDataLoader::Init()
 {
 	RegisterComponentLoadingFunction("transform", [](const std::string& data){ return SComponentTransform::LoadComponentFromJson(data); });
 	RegisterComponentLoadingFunction("collider", [](const std::string& data){ return SComponentCollider::LoadComponentFromJson(data); });
@@ -19,17 +19,17 @@ void CComponentManager::Init()
 }
 
 //------------------------------------------------------------------
-void CComponentManager::RegisterComponentLoadingFunction(const std::string& componentName, const TComponentLoadingFunctor&& function)
+void CComponentDataLoader::RegisterComponentLoadingFunction(const std::string& componentName, const TComponentLoadingFunctor&& function)
 {
 	// Don't register the same component more than once
 	const auto itFunctions = m_componentLoadingFunctions.find(componentName);
 	assert(itFunctions == m_componentLoadingFunctions.end());
 
-	CComponentManager::m_componentLoadingFunctions.emplace(componentName, std::move(function));
+	CComponentDataLoader::m_componentLoadingFunctions.emplace(componentName, std::move(function));
 }
 
 //------------------------------------------------------------------
-std::shared_ptr<IComponent> CComponentManager::LoadComponentFromJson(const std::string& componentName, const std::string& json)
+std::shared_ptr<IComponent> CComponentDataLoader::LoadComponentFromJson(const std::string& componentName, const std::string& json)
 {
 	const auto itFunctions = m_componentLoadingFunctions.find(componentName);
 	assert(itFunctions != m_componentLoadingFunctions.end());

@@ -2,7 +2,6 @@
 // Project: Larian Test
 
 #include "SComponentTransform.h"
-#include "CComponentManager.h"
 #include "json.hpp"
 
 #include <assert.h>

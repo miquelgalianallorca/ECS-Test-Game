@@ -26,7 +26,7 @@ bool CMap::LoadMap(const char* fileName)
 		return false;
 	}
 
-	CComponentManager& componentManager = CGame::GetInstance().GetComponentManager();
+	CComponentDataLoader& componentManager = CGame::GetInstance().GetComponentManager();
 	CEntitySystem& entitySystem = CGame::GetInstance().GetEntitySystem();
 
 	// Map is an array of entities

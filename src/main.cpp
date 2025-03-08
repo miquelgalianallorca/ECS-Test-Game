@@ -26,7 +26,7 @@
 #define LogError(str) std::cerr << str << std::endl
 
 //------------------------------------------------------------------
-int main ()
+int main()
 {
 	const float UPDATE_TIME = 0.15;
 

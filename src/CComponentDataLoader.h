@@ -13,7 +13,7 @@ struct IComponent;
 typedef std::function<std::shared_ptr<IComponent>(const std::string&)> TComponentLoadingFunctor;
 
 //------------------------------------------------------------------
-class CComponentManager
+class CComponentDataLoader
 {
 public:
 	// Register all component loading functions

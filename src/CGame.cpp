@@ -18,7 +18,7 @@ void CGame::Init()
 }
 
 //------------------------------------------------------------------
-CComponentManager& CGame::GetComponentManager()
+CComponentDataLoader& CGame::GetComponentManager()
 {
 	return m_componentManager;
 }

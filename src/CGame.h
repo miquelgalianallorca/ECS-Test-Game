@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "CComponentManager.h"
+#include "CComponentDataLoader.h"
 #include "CEntitySystem.h"
 
 #include <memory> // for std::shared_ptr
@@ -20,7 +20,7 @@ public:
 	void Init();
 
 	// Access game systems
-	CComponentManager& GetComponentManager();
+	CComponentDataLoader& GetComponentManager();
 	CEntitySystem& GetEntitySystem();
 
 private:
@@ -32,7 +32,7 @@ private:
 	CGame& operator=(CGame&&) = delete;
 
 	// Handles loading components from data
-	CComponentManager m_componentManager;
+	CComponentDataLoader m_componentManager;
 
 	// Entity Component System (ECS)
 	CEntitySystem m_entitySystem;
