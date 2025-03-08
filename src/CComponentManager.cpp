@@ -2,9 +2,9 @@
 // Project: Larian Test
 
 #include "CComponentManager.h"
-#include "CComponentCollider.h"
-#include "CComponentRenderable.h"
-#include "CComponentTransform.h"
+#include "SComponentCollider.h"
+#include "SComponentRenderable.h"
+#include "SComponentTransform.h"
 
 #include "IComponent.h"
 
@@ -13,9 +13,9 @@
 //------------------------------------------------------------------
 void CComponentManager::Init()
 {
-	RegisterComponentLoadingFunction("transform", [](const std::string& data){ return CComponentTransform::LoadComponentFromJson(data); });
-	RegisterComponentLoadingFunction("collider", [](const std::string& data){ return CComponentCollider::LoadComponentFromJson(data); });
-	RegisterComponentLoadingFunction("renderable", [](const std::string& data){ return CComponentRenderable::LoadComponentFromJson(data); });
+	RegisterComponentLoadingFunction("transform", [](const std::string& data){ return SComponentTransform::LoadComponentFromJson(data); });
+	RegisterComponentLoadingFunction("collider", [](const std::string& data){ return SComponentCollider::LoadComponentFromJson(data); });
+	RegisterComponentLoadingFunction("renderable", [](const std::string& data){ return SComponentRenderable::LoadComponentFromJson(data); });
 }
 
 //------------------------------------------------------------------
