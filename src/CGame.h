@@ -4,6 +4,7 @@
 #pragma once
 
 #include "CComponentManager.h"
+#include "CEntitySystem.h"
 
 #include <memory> // for std::shared_ptr
 
@@ -20,6 +21,7 @@ public:
 
 	// Access game systems
 	CComponentManager& GetComponentManager();
+	CEntitySystem& GetEntitySystem();
 
 private:
 	// Singleton pattern: No copying, assigning or creating more instances
@@ -31,6 +33,9 @@ private:
 
 	// Handles loading components from data
 	CComponentManager m_componentManager;
+
+	// Entity Component System (ECS)
+	CEntitySystem m_entitySystem;
 
 	//CGraphicsSystem m_graphicsSystem;
 	//CPhysicsSystem m_physicsSystem;

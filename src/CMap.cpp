@@ -3,7 +3,6 @@
 
 #include "CMap.h"
 #include "CGame.h"
-#include "CEntity.h"
 #include "IComponent.h"
 #include "json.hpp"
 
@@ -12,7 +11,7 @@
 #include <fstream>  // for std::ifstream
 #include <raylib.h> // for Drawing on screen (Improvement: Access library via interface)
 
-#define LogLoadDebug(str, entityName) std::cout << str << " - Entity: " << entityName << std::endl
+#define LogLoadDebug(str, entityName, componentName) std::cout << str << " - Component: " << componentName << ", Entity: " << entityName << std::endl
 #define LogLoadError(str, entityName, componentName) std::cerr << str << " - Component: " << componentName << ", Entity: " << entityName << std::endl
 
 using json = nlohmann::json;
@@ -28,9 +27,9 @@ bool CMap::LoadMap(const char* fileName)
 	}
 
 	CComponentManager& componentManager = CGame::GetInstance().GetComponentManager();
+	CEntitySystem& entitySystem = CGame::GetInstance().GetEntitySystem();
 
 	// Map is an array of entities
-	EntityId entityIndex = 0;
 	for (const auto& entity : data)
 	{
 		// Entities must have a name
@@ -42,51 +41,27 @@ bool CMap::LoadMap(const char* fileName)
 		assert(entity.contains("components"));
 		assert(entity["components"].is_array());
 
-		CEntity newEntity(++entityIndex, std::move(entityName));
+		EntityId newEntityId = entitySystem.CreateEntity();
 		for (const auto& component : entity["components"])
 		{
 			assert(component.contains("name"));
 			assert(component["name"].is_string());
 			const std::string componentName = component["name"];
 
+			// TO DO: send newEntityId to these loading functions
+			// so that the component is registered to the entity via
+			//componentManager.AddComponent<ComponentType>(entityId);
 			std::shared_ptr<IComponent> pComponent = componentManager.LoadComponentFromJson(componentName, component.dump());
 			if (!pComponent)
 			{
-				LogLoadError("Failed to load Component", newEntity.GetName(), componentName);
+				LogLoadError("Failed to load Component", entityName, componentName);
 				continue;
 			}
 
-			newEntity.AddComponent(pComponent);
-			LogLoadDebug("Component loaded", newEntity.GetName());
-
-			/*
-			else if (className == "actor")
-			{
-				// health, speed
-				// skills?
-				// isPlayer? (only one party NPC starts as player)
-				// isPartyNPC? (add to UI on entity created)
-				// isEnemy? (add to AI on entity created)
-				// ...
-			}
-			else if (className == "effect")
-			{
-				// other stuff (water, fire)
-				// damage over time
-				// movement slowing
-				// instant death
-				// ...
-			}
-			else if (className == "gamerules")
-			{
-				// victory conditions?
-				// getting somewhere? time limit? kill X enemies?
-				// ...
-			}
-			*/
+			LogLoadDebug("Loaded ", entityName, componentName);
 		}
 
-		m_entities.emplace_back(std::move(newEntity));
+		//m_entities.emplace_back(std::move(newEntity));
 	}
 
 	iss.close();
@@ -96,43 +71,27 @@ bool CMap::LoadMap(const char* fileName)
 //------------------------------------------------------------------
 void CMap::OnInit()
 {
+	// TO DO: Move to graphics system
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Larian Test");
 	SetTargetFPS(60);
-
-	for (CEntity& entity : m_entities)
-	{
-		entity.OnInit();
-	}
 }
 
 //------------------------------------------------------------------
 void CMap::OnDone()
 {
-	for (CEntity& entity : m_entities)
-	{
-		entity.OnDone();
-	}
 }
 
 //------------------------------------------------------------------
 void CMap::Update(const float& deltaTime)
 {
-	for (CEntity& entity : m_entities)
-	{
-		entity.Update(deltaTime);
-	}
 }
 
 //------------------------------------------------------------------
 void CMap::Render(const float& deltaTime)
 {
+	// TO DO: Move to graphics system
 	BeginDrawing();
 	ClearBackground(BLACK);
-
-	for (CEntity& entity : m_entities)
-	{
-		entity.Render(deltaTime);
-	}
 
 	// Test
 	ball_x += ball_speed_x;

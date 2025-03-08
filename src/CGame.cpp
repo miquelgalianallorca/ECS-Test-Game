@@ -22,3 +22,9 @@ CComponentManager& CGame::GetComponentManager()
 {
 	return m_componentManager;
 }
+
+//------------------------------------------------------------------
+CEntitySystem& CGame::GetEntitySystem()
+{
+	return m_entitySystem;
+}

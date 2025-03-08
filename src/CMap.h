@@ -5,8 +5,6 @@
 
 #include <vector>
 
-#include "CEntity.h"
-
 //------------------------------------------------------------------
 class CMap
 {
@@ -27,7 +25,7 @@ public:
 	void Render(const float& deltaTime);
 
 private:
-	std::vector<CEntity> m_entities; 
+	//std::vector<CEntity> m_entities; 
 
 	// Test
 	const int SCREEN_WIDTH = 1280;

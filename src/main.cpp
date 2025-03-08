@@ -7,7 +7,7 @@
 #include <iostream>
 #include <raylib.h>
 
-// Resources
+// Resources & References
 // ------------------------------------------------------------------
 // Raylib (Graphics library)
 // https://www.raylib.com/index.html
@@ -15,6 +15,10 @@
 //
 // JSON parser
 // https://github.com/nlohmann/json
+//
+// ECS
+// https://austinmorlan.com/posts/entity_component_system/
+// https://www.david-colson.com/2020/02/09/making-a-simple-ecs.html
 // ------------------------------------------------------------------
 
 // Improvement: Logging interface

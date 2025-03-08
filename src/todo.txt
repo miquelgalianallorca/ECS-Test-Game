@@ -1,0 +1,27 @@
+//------------------------------------------------------------------
+// TO DO
+//------------------------------------------------------------------
+
+// Component ideas
+//------------------------------------------------------------------
+"actor"
+	- health, speed
+	- skills?
+	- isPlayer? (only one party NPC starts as player)
+	- isPartyNPC? (add to UI on entity created)
+	- isEnemy? (add to AI on entity created)
+	- ...
+
+"effect"
+	- other stuff (water, fire)
+	- damage over time
+	- movement slowing
+	- instant death
+	- ...
+
+"gamerules"
+	- victory conditions?
+	- getting somewhere? time limit? kill X enemies?
+	- ...
+//------------------------------------------------------------------
+
