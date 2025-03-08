@@ -13,14 +13,14 @@ CGame& CGame::GetInstance()
 //------------------------------------------------------------------
 void CGame::Init()
 {
-	m_componentManager.Init();
+	m_componentDataLoader.Init();
 	// ...
 }
 
 //------------------------------------------------------------------
-CComponentDataLoader& CGame::GetComponentManager()
+CComponentDataLoader& CGame::GetComponentDataLoader()
 {
-	return m_componentManager;
+	return m_componentDataLoader;
 }
 
 //------------------------------------------------------------------

@@ -26,7 +26,7 @@ bool CMap::LoadMap(const char* fileName)
 		return false;
 	}
 
-	CComponentDataLoader& componentManager = CGame::GetInstance().GetComponentManager();
+	CComponentDataLoader& componentDataLoader = CGame::GetInstance().GetComponentDataLoader();
 	CEntitySystem& entitySystem = CGame::GetInstance().GetEntitySystem();
 
 	// Map is an array of entities
@@ -51,7 +51,7 @@ bool CMap::LoadMap(const char* fileName)
 			// TO DO: send newEntityId to these loading functions
 			// so that the component is registered to the entity via
 			//componentManager.AddComponent<ComponentType>(entityId);
-			std::shared_ptr<IComponent> pComponent = componentManager.LoadComponentFromJson(componentName, component.dump());
+			std::shared_ptr<IComponent> pComponent = componentDataLoader.LoadComponentFromJson(componentName, component.dump());
 			if (!pComponent)
 			{
 				LogLoadError("Failed to load Component", entityName, componentName);

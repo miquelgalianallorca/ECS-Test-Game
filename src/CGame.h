@@ -20,7 +20,7 @@ public:
 	void Init();
 
 	// Access game systems
-	CComponentDataLoader& GetComponentManager();
+	CComponentDataLoader& GetComponentDataLoader();
 	CEntitySystem& GetEntitySystem();
 
 private:
@@ -32,7 +32,7 @@ private:
 	CGame& operator=(CGame&&) = delete;
 
 	// Handles loading components from data
-	CComponentDataLoader m_componentManager;
+	CComponentDataLoader m_componentDataLoader;
 
 	// Entity Component System (ECS)
 	CEntitySystem m_entitySystem;

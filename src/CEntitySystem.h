@@ -73,6 +73,7 @@ private:
 
 // When an Entity is destroyed we need to update the maps of all Component Arrays
 // Added an interface to call them all from ComponentManager
+// Improvement: Use custom events, or some other system to avoid inheritance overhead
 //------------------------------------------------------------------
 struct IComponentArray
 {
