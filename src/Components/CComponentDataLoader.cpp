@@ -2,11 +2,11 @@
 // Project: Larian Test
 
 #include "CComponentDataLoader.h"
-#include "SComponentCollider.h"
-#include "SComponentRenderable.h"
-#include "SComponentTransform.h"
+#include "Components/SComponentCollider.h"
+#include "Components/SComponentRenderable.h"
+#include "Components/SComponentTransform.h"
 
-#include "IComponent.h"
+#include "Components/IComponent.h"
 
 #include <assert.h>
 

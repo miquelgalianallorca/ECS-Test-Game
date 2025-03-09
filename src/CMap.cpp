@@ -3,7 +3,7 @@
 
 #include "CMap.h"
 #include "CGame.h"
-#include "IComponent.h"
+#include "Components/IComponent.h"
 #include "json.hpp"
 
 #include <assert.h> // for assert
@@ -41,7 +41,7 @@ bool CMap::LoadMap(const char* fileName)
 		assert(entity.contains("components"));
 		assert(entity["components"].is_array());
 
-		EntityId newEntityId = entityManager.CreateEntity();
+		EntityId newEntityId = entityManager.CreateEntity(); // fix
 		for (const auto& component : entity["components"])
 		{
 			assert(component.contains("name"));

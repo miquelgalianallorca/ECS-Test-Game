@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "CComponentDataLoader.h"
+#include "Components/CComponentDataLoader.h"
 #include "ECS/CEntityManager.h"
 
 #include <memory> // for std::shared_ptr
