@@ -26,7 +26,7 @@
 //   uses it.
 //------------------------------------------------------------------
 
-// Identifies an Entity by being an index to the Entity list
+// Identifies an Entity by being an index to the Entity list in CEntitySystem
 typedef std::uint32_t EntityId;
 
 // Bitmask to check which Components an Entity has

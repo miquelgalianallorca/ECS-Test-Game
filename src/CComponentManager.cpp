@@ -69,3 +69,74 @@ void CComponentArray<T>::OnEntityDestroyed(EntityId entityId)
 		RemoveEntityData(entityId);
 	}
 }
+
+//------------------------------------------------------------------
+template<typename T>
+void CComponentManager::RegisterComponent()
+{
+	// Verify we're not registering the same Component type multiple times
+	const char* typeName = typeid(T).name();
+	assert(m_componentIds.find(typeName) == m_componentIds.end());
+
+	// Add this component type to the ComponentId map
+	m_componentIds.insert({ typeName, m_nextComponentId });
+	++m_nextComponentId;
+
+	// Create a ComponentArray pointer and add it to the component arrays map
+	m_componentArrays.insert({ typeName, std::make_shared<CComponentArray<T>>() });
+}
+
+//------------------------------------------------------------------
+template<typename T>
+ComponentId CComponentManager::GetComponentId()
+{
+	// Verify Component type has been registered
+	const char* typeName = typeid(T).name();
+	assert(m_componentIds.find(typeName) != m_componentIds.end());
+
+	return m_componentIds[typeName];
+}
+
+//------------------------------------------------------------------
+template<typename T>
+void CComponentManager::AddComponent(EntityId entityId, T component)
+{
+	GetComponentArray<T>()->InsertData(entityId, component);
+}
+
+//------------------------------------------------------------------
+template<typename T>
+void CComponentManager::RemoveComponent(EntityId entityId)
+{
+	GetComponentArray<T>()->RemoveData(entityId);
+}
+
+//------------------------------------------------------------------
+template<typename T>
+T& CComponentManager::GetComponent(EntityId entityId)
+{
+	return GetComponentArray<T>()->GetData(entityId);
+}
+
+//------------------------------------------------------------------
+void CComponentManager::OnEntityDestroyed(EntityId entityId)
+{
+	// Notify each component array that an entity has been destroyed
+	// If it has a component for that entity, it will remove it
+	for (const auto& pair : m_componentArrays)
+	{
+		const std::shared_ptr<IComponentArray> pComponentArray = pair.second;
+		pComponentArray->OnEntityDestroyed(entityId);
+	}
+}
+
+//------------------------------------------------------------------
+template<typename T>
+std::shared_ptr<CComponentArray<T>> CComponentManager::GetComponentArray()
+{
+	// Verify that the component has been registered
+	const char* typeName = typeid(T).name();
+	assert(m_componentIds.find(typeName) != m_componentIds.end());
+
+	return std::static_pointer_cast<CComponentArray<T>>(m_componentIds[typeName]);
+}
