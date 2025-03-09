@@ -3,6 +3,10 @@
 
 #pragma once
 
+#include "CEntityManager.h"
+#include "CComponentManager.h"
+#include "CSystemManager.h"
+
 //------------------------------------------------------------------
 // This class coordinates EntityManager, ComponentManager and SystemManager
 // We will have a single EntityComponentSystem that holds them and
@@ -16,91 +20,45 @@
 //------------------------------------------------------------------
 class CEntityComponentSystem
 {
-// 	public:
-// 	void Init()
-// 	{
-// 		// Create pointers to each manager
-// 		mComponentManager = std::make_unique<ComponentManager>();
-// 		mEntityManager = std::make_unique<EntityManager>();
-// 		mSystemManager = std::make_unique<SystemManager>();
-// 	}
+public:
+	// Create Entity, Component and System managers
+	void Init();
 
+	// Entity managing
+	//----------------------------------------------------------------
+	EntityId CreateEntity();
+	void DestroyEntity(EntityId entityId);
+	//----------------------------------------------------------------
 
-// 	// Entity methods
-// 	Entity CreateEntity()
-// 	{
-// 		return mEntityManager->CreateEntity();
-// 	}
+	// Component managing
+	//----------------------------------------------------------------
+	template<typename T>
+	void RegisterComponent();
 
-// 	void DestroyEntity(Entity entity)
-// 	{
-// 		mEntityManager->DestroyEntity(entity);
+	template<typename T>
+	void AddComponent(EntityId entityId, T component);
 
-// 		mComponentManager->EntityDestroyed(entity);
+	template<typename T>
+	void RemoveComponent(EntityId entityId);
 
-// 		mSystemManager->EntityDestroyed(entity);
-// 	}
+	template<typename T>
+	T& GetComponent(EntityId entityId);
 
+	template<typename T>
+	ComponentId GetComponentId();
+	//----------------------------------------------------------------
 
-// 	// Component methods
-// 	template<typename T>
-// 	void RegisterComponent()
-// 	{
-// 		mComponentManager->RegisterComponent<T>();
-// 	}
+	// System managing
+	//----------------------------------------------------------------
+	template<typename T>
+	std::shared_ptr<T> RegisterSystem();
 
-// 	template<typename T>
-// 	void AddComponent(Entity entity, T component)
-// 	{
-// 		mComponentManager->AddComponent<T>(entity, component);
+	template<typename T>
+	void SetSystemComponentMask(ComponentMask systemComponentMask);
+	//----------------------------------------------------------------
 
-// 		auto signature = mEntityManager->GetSignature(entity);
-// 		signature.set(mComponentManager->GetComponentType<T>(), true);
-// 		mEntityManager->SetSignature(entity, signature);
-
-// 		mSystemManager->EntitySignatureChanged(entity, signature);
-// 	}
-
-// 	template<typename T>
-// 	void RemoveComponent(Entity entity)
-// 	{
-// 		mComponentManager->RemoveComponent<T>(entity);
-
-// 		auto signature = mEntityManager->GetSignature(entity);
-// 		signature.set(mComponentManager->GetComponentType<T>(), false);
-// 		mEntityManager->SetSignature(entity, signature);
-
-// 		mSystemManager->EntitySignatureChanged(entity, signature);
-// 	}
-
-// 	template<typename T>
-// 	T& GetComponent(Entity entity)
-// 	{
-// 		return mComponentManager->GetComponent<T>(entity);
-// 	}
-
-// 	template<typename T>
-// 	ComponentType GetComponentType()
-// 	{
-// 		return mComponentManager->GetComponentType<T>();
-// 	}
-
-
-// 	// System methods
-// 	template<typename T>
-// 	std::shared_ptr<T> RegisterSystem()
-// 	{
-// 		return mSystemManager->RegisterSystem<T>();
-// 	}
-
-// 	template<typename T>
-// 	void SetSystemSignature(Signature signature)
-// 	{
-// 		mSystemManager->SetSignature<T>(signature);
-// 	}
-
-// private:
-// 	std::unique_ptr<ComponentManager> mComponentManager;
-// 	std::unique_ptr<EntityManager> mEntityManager;
-// 	std::unique_ptr<SystemManager> mSystemManager;
+private:
+	std::unique_ptr<CComponentManager> m_pComponentManager;
+	std::unique_ptr<CEntityManager>    m_pEntityManager;
+	std::unique_ptr<CSystemManager>    m_pSystemManager;
 };
