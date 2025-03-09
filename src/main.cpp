@@ -20,6 +20,9 @@
 // https://austinmorlan.com/posts/entity_component_system/
 // https://www.david-colson.com/2020/02/09/making-a-simple-ecs.html
 // https://tsprojectsblog.wordpress.com/portfolio/entity-component-system/
+//
+// Installing MinGW
+// https://code.visualstudio.com/docs/cpp/config-mingw
 // ------------------------------------------------------------------
 
 // Improvement: Logging interface

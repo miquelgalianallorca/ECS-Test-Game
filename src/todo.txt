@@ -2,9 +2,71 @@
 // TO DO
 //------------------------------------------------------------------
 
-// Component ideas
+// System/Component ideas
 //------------------------------------------------------------------
-"actor"
+- Movement System (use this both for characters and the camera)
+	- input component: detect input, enabled
+		- input could be disabled by UI (ie. pause menu)
+		- input only enabled for currently controlled character
+	- AI component: behaviour (generates input), enabled
+		- NPCs have AI instead of input
+		- Non-controlled characters enable their AI outside of combat (follow behaviour)
+		- Disabled out of turn in combat
+	- movement component: movement speed, enabled
+		- movement can be disabled by combat system (in combat, out of turn)
+		- movement can be disabled by effects (frozen, dead)
+	- transform component: position, rotation
+		- move base on input (speed = distance/time)
+	- collider component: speed, collider shape
+		- don't move if after the move we would be colliding
+	- turn component: how much we've moved this turn
+	- character stats component: how much we can move per turn (speed attribute?)
+
+- Turn Combat System (keep a list of turn components - track turn order - update turn component on entities)
+	- input component: detect input, enabled
+		- key to end turn
+	- AI component: enabled
+	- turn component: active (bool set if it's the entity's current turn)
+	- character stats component: bonus 
+	+ StartCombat(): generate turn order
+	+ bool NextTurn(): disable turn component of current turn haver, enable turn component of next one
+		- return if there are no next turns, to end combat
+	+ OnCombatEnd(): return components to their default state, remove turn combat system
+
+- Render System
+	- transform component: position, rotation
+	- shape component (draw based on shape data)
+	- collider component: speed
+		- use the current speed to interpolate the drawing position
+
+
+- UI
+
+1)
+-------------------------------------------------------------
+¦----¦                                                  ¦   ¦2)
+¦----¦                                                  ¦   ¦
+¦----¦                                                  ¦   ¦
+¦----¦                                                 >¦   ¦
+¦                                                       ¦---¦
+¦                                                           ¦
+¦                 3)                                        ¦
+¦                 ---------------------                     ¦
+¦                 ¦  ¦  ¦  ¦  ¦  ¦  ¦  ¦                    ¦
+-------------------------------------------------------------
+1) Main character portraits
+	- click to select and control (if not in combat)
+	- highlight actor on hover
+2) Initiative order (in combat)
+	- marker for whose turn it is
+3) Skill bar
+	- 6 icons?
+	- Show health/energy under bar?
+	- Show hints on skill hover?
+	- last skill is "pass" to end turn
+
+
+"actor component"
 	- health, speed
 	- skills?
 	- isPlayer? (only one party NPC starts as player)
@@ -12,7 +74,7 @@
 	- isEnemy? (add to AI on entity created)
 	- ...
 
-"effect"
+"effect" components
 	- other stuff (water, fire)
 	- damage over time
 	- movement slowing

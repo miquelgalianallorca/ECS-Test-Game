@@ -29,11 +29,20 @@ public:
 class CSystemManager
 {
 public:
+	template<typename T>
+	std::shared_ptr<T> RegisterSystem();
+
+	template<typename T>
+	void SetComponentMask(ComponentMask componentMask);
+
+	void OnEntityDestroyed(EntityId entityId);
+
+	void OnEntityComponentsChanged(EntityId entityId, ComponentMask entityComponentsMask);
 
 private:
-	// Map from system type string pointer to a ComponentMask
-	std::unordered_map<const char*, ComponentMask> m_componentMasks;
+	// ComponentMasks of each system (mapped by system name)
+	std::unordered_map<const char*, ComponentMask> m_systemComponentMasks;
 
-	// Map from system type string pointer to a System pointer
+	// Pointers to all Systems (mapped by system name)
 	std::unordered_map<const char*, std::shared_ptr<CSystem>> m_systems;
 };
