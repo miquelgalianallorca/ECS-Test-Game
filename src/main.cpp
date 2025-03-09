@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------
 // Raylib (Graphics library)
 // https://www.raylib.com/index.html
-// https://github.com/educ8s/Raylib-CPP-Starter-Template-for-VSCODE
+// https://github.com/educ8s/Raylib-CPP-Starter-Template-for-VSCODE-V2
 //
 // JSON parser
 // https://github.com/nlohmann/json
@@ -19,6 +19,7 @@
 // ECS
 // https://austinmorlan.com/posts/entity_component_system/
 // https://www.david-colson.com/2020/02/09/making-a-simple-ecs.html
+// https://tsprojectsblog.wordpress.com/portfolio/entity-component-system/
 // ------------------------------------------------------------------
 
 // Improvement: Logging interface

@@ -4,7 +4,7 @@
 #pragma once
 
 #include "CComponentDataLoader.h"
-#include "CEntityManager.h"
+#include "ECS/CEntityManager.h"
 
 #include <memory> // for std::shared_ptr
 

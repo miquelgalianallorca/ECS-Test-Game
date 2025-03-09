@@ -8,7 +8,7 @@
           "name": "Debug",
           "type": "cppdbg",
           "request": "launch",
-          "program": "${workspaceFolder}/${fileBasenameNoExtension}",
+          "program": "${workspaceFolder}/bin/Debug/${workspaceFolderBasename}.exe",
           "args": [],
           "stopAtEntry": false,
           "cwd": "${workspaceFolder}",
@@ -23,12 +23,14 @@
             }
           ],
           "windows": {
-            "miDebuggerPath": "C:/raylib/w64devkit/bin/gdb.exe",
+            "miDebuggerPath": "gdb.exe",
           },
           "osx": {
+            "program": "${workspaceFolder}/bin/Debug/${workspaceFolderBasename}",
             "MIMode": "lldb"
           },
           "linux": {
+            "program": "${workspaceFolder}/bin/Debug/${workspaceFolderBasename}",
             "miDebuggerPath": "/usr/bin/gdb",
           },
           "preLaunchTask": "build debug"
@@ -42,16 +44,18 @@
           "cwd": "${workspaceFolder}",
           "environment": [],
           "externalConsole": false,
-          "program": "${workspaceFolder}/${fileBasenameNoExtension}",
+          "program": "${workspaceFolder}/bin/Release/${workspaceFolderBasename}.exe",
           "MIMode": "gdb",
           "windows": {
-            "program": "${workspaceFolder}/${fileBasenameNoExtension}.exe",
-            "miDebuggerPath": "C:/raylib/w64devkit/bin/gdb.exe"
+            "program": "${workspaceFolder}/bin/Release/${workspaceFolderBasename}.exe",
+            "miDebuggerPath": "gdb.exe"
           },
           "osx": {
+            "program": "${workspaceFolder}/bin/Release/${workspaceFolderBasename}",
             "MIMode": "lldb"
           },
           "linux": {
+            "program": "${workspaceFolder}/bin/Release/${workspaceFolderBasename}",
             "miDebuggerPath": "/usr/bin/gdb"
           },
           "preLaunchTask": "build release",
