@@ -33,7 +33,7 @@ public:
 	std::shared_ptr<T> RegisterSystem();
 
 	template<typename T>
-	void SetComponentMask(ComponentMask componentMask);
+	void SetSystemComponentMask(ComponentMask componentMask);
 
 	void OnEntityDestroyed(EntityId entityId);
 
