@@ -27,7 +27,7 @@ bool CMap::LoadMap(const char* fileName)
 	}
 
 	CComponentDataLoader& componentDataLoader = CGame::GetInstance().GetComponentDataLoader();
-	CEntitySystem& entitySystem = CGame::GetInstance().GetEntitySystem();
+	CEntityManager& entityManager = CGame::GetInstance().GetEntityManager();
 
 	// Map is an array of entities
 	for (const auto& entity : data)
@@ -41,7 +41,7 @@ bool CMap::LoadMap(const char* fileName)
 		assert(entity.contains("components"));
 		assert(entity["components"].is_array());
 
-		EntityId newEntityId = entitySystem.CreateEntity();
+		EntityId newEntityId = entityManager.CreateEntity();
 		for (const auto& component : entity["components"])
 		{
 			assert(component.contains("name"));

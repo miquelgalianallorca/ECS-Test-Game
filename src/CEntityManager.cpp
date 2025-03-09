@@ -1,12 +1,12 @@
 // Author: Miquel Galiana Llorca
 // Project: Larian Test
 
-#include "CEntitySystem.h"
+#include "CEntityManager.h"
 
 #include <assert.h>
 
 //------------------------------------------------------------------
-CEntitySystem::CEntitySystem()
+CEntityManager::CEntityManager()
 {
 	// Cache all possible EntityIds
 	for (EntityId entityId = 0; entityId < MAX_ENTITIES; ++entityId)
@@ -16,7 +16,7 @@ CEntitySystem::CEntitySystem()
 }
 
 //------------------------------------------------------------------
-EntityId CEntitySystem::CreateEntity()
+EntityId CEntityManager::CreateEntity()
 {
 	// Verify that we don't have too many entities (Would overflow array)
 	assert(m_entityCount < MAX_ENTITIES && !m_availableEntityIds.empty());
@@ -29,7 +29,7 @@ EntityId CEntitySystem::CreateEntity()
 }
 
 //------------------------------------------------------------------
-void CEntitySystem::DestroyEntity(EntityId entityId)
+void CEntityManager::DestroyEntity(EntityId entityId)
 {
 	// Verify entityId is valid index
 	assert(entityId < MAX_ENTITIES);
@@ -43,7 +43,7 @@ void CEntitySystem::DestroyEntity(EntityId entityId)
 }
 
 //------------------------------------------------------------------
-void CEntitySystem::SetEntityComponentMask(EntityId entityId, ComponentMask componentMask)
+void CEntityManager::SetEntityComponentMask(EntityId entityId, ComponentMask componentMask)
 {
 	// Verify entityId is valid index
 	assert(entityId < MAX_ENTITIES);
@@ -53,7 +53,7 @@ void CEntitySystem::SetEntityComponentMask(EntityId entityId, ComponentMask comp
 }
 
 //------------------------------------------------------------------
-ComponentMask CEntitySystem::GetEntityComponentMask(EntityId entityId) const
+ComponentMask CEntityManager::GetEntityComponentMask(EntityId entityId) const
 {
 	// Verify entityId is valid index
 	assert(entityId < MAX_ENTITIES);

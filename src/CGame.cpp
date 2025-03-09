@@ -24,7 +24,7 @@ CComponentDataLoader& CGame::GetComponentDataLoader()
 }
 
 //------------------------------------------------------------------
-CEntitySystem& CGame::GetEntitySystem()
+CEntityManager& CGame::GetEntityManager()
 {
-	return m_entitySystem;
+	return m_entityManager;
 }

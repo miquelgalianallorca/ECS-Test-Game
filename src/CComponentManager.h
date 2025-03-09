@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include "CEntitySystem.h"
+#include "CEntityManager.h"
 
 #include <memory> // for std::shared_ptr
 
@@ -18,7 +18,7 @@
 
 // When an Entity is destroyed we need to update the maps of all Component Arrays
 // Added an interface to call them all from ComponentManager
-// Improvement: Use custom events, or some other system to avoid inheritance overhead
+// Improvement: Use custom events, or some other option to avoid inheritance overhead
 //------------------------------------------------------------------
 struct IComponentArray
 {
@@ -40,7 +40,7 @@ public:
 	T& GetComponent(EntityId entityId);
 
 private:
-	// To identify positions in the packed array, we map EntityIds (index in the EntitySystem array)
+	// To identify positions in the packed array, we map EntityIds (index in the EntityManager array)
 	// to their index in the component array
 	// std::unordered_map:
 	// - Better than std::map for performance (linked lists instead of binary tree)
@@ -59,7 +59,7 @@ private:
 };
 
 //------------------------------------------------------------------
-// CEntitySystem manages entities
+// CEntityManager manages entities
 // CComponentManager manages components, holding all ComponentArrays
 //------------------------------------------------------------------
 

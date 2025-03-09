@@ -26,7 +26,7 @@
 //   uses it.
 //------------------------------------------------------------------
 
-// Identifies an Entity by being an index to the Entity list in CEntitySystem
+// Identifies an Entity by being an index to the Entity list in CEntityManager
 typedef std::uint32_t EntityId;
 
 // Bitmask to check which Components an Entity has
@@ -39,10 +39,10 @@ typedef std::bitset<MAX_COMPONENTS> ComponentMask;
 const EntityId MAX_ENTITIES = 1024;
 
 //------------------------------------------------------------------
-class CEntitySystem
+class CEntityManager
 {
 public:
-	CEntitySystem();
+	CEntityManager();
 
 	EntityId CreateEntity();
 	void DestroyEntity(EntityId entityId);
