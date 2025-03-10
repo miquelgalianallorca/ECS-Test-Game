@@ -25,7 +25,7 @@ void CGraphicsSystem::Init()
 
 	// Raylib
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Larian Test");
-	SetTargetFPS(60);
+	SetTargetFPS(120);
 }
 
 //------------------------------------------------------------------
@@ -36,18 +36,8 @@ void CGraphicsSystem::Update(const float& deltaTime)
 	ClearBackground(BLACK);
 
 	// Test
-	ball_x += ball_speed_x;
-	ball_y += ball_speed_y;
-	if (ball_x + ball_radius >= SCREEN_WIDTH || ball_x - ball_radius <= 0)
-	{
-		ball_speed_x *= -1;
-	}
-	if (ball_y + ball_radius >= SCREEN_HEIGHT || ball_y - ball_radius <= 0)
-	{
-		ball_speed_y *= -1;
-	}
-
-	DrawCircle(ball_x, ball_y, ball_radius, WHITE);
+	ball.Update();
+	ball.Draw();
 	//~Test
 
 	// End OpenGL pipeline

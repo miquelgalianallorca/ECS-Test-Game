@@ -5,6 +5,8 @@
 
 #include "ECS/CSystemManager.h"
 
+#include "ball.h" // just testing
+
 //------------------------------------------------------------------
 class CGraphicsSystem : public CSystem
 {
@@ -16,10 +18,6 @@ private:
 	// Test
 	const int SCREEN_WIDTH = 1280;
 	const int SCREEN_HEIGHT = 720;
-	int ball_x = 100;
-	int ball_y = 100;
-	int ball_speed_x = 5;
-	int ball_speed_y = 5;
-	int ball_radius = 15;
+	Ball ball;
 	//~Test
 };
