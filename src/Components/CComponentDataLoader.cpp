@@ -2,17 +2,29 @@
 // Project: Larian Test
 
 #include "CComponentDataLoader.h"
-#include "Components/SComponentCollider.h"
-#include "Components/SComponentRenderable.h"
-#include "Components/SComponentTransform.h"
 
-#include "Components/IComponent.h"
+#include "CGame.h"
+#include "ECS/CEntityComponentSystem.h"
+#include "IComponent.h"
+#include "SComponentCollider.h"
+#include "SComponentRenderable.h"
+#include "SComponentTransform.h"
 
 #include <assert.h>
 
 //------------------------------------------------------------------
 void CComponentDataLoader::Init()
 {
+	CGame& game = CGame::GetInstance();
+	CEntityComponentSystem& entityComponentSystem = game.GetEntityComponentSystem();
+
+	// Register all Component classes into the ECS
+	// Improvement: Have all components register themselves to the ECS
+	entityComponentSystem.RegisterComponent<SComponentTransform>();
+	entityComponentSystem.RegisterComponent<SComponentCollider>();
+	entityComponentSystem.RegisterComponent<SComponentRenderable>();
+
+	// Register all static functions for loading each Component class from data
 	RegisterComponentLoadingFunction("transform", [](const std::string& data){ return SComponentTransform::LoadComponentFromJson(data); });
 	RegisterComponentLoadingFunction("collider", [](const std::string& data){ return SComponentCollider::LoadComponentFromJson(data); });
 	RegisterComponentLoadingFunction("renderable", [](const std::string& data){ return SComponentRenderable::LoadComponentFromJson(data); });

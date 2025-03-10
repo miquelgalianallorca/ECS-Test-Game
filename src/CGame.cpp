@@ -13,8 +13,11 @@ CGame& CGame::GetInstance()
 //------------------------------------------------------------------
 void CGame::Init()
 {
+	m_entityComponentSystem.Init();
+
+	// Will also register all components to the ECS, so the ECS's Init()
+	// must happen first
 	m_componentDataLoader.Init();
-	// ...
 }
 
 //------------------------------------------------------------------
@@ -24,7 +27,7 @@ CComponentDataLoader& CGame::GetComponentDataLoader()
 }
 
 //------------------------------------------------------------------
-CEntityManager& CGame::GetEntityManager()
+CEntityComponentSystem& CGame::GetEntityComponentSystem()
 {
-	return m_entityManager;
+	return m_entityComponentSystem;
 }

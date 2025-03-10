@@ -7,9 +7,8 @@
 #include "json.hpp"
 
 #include <assert.h> // for assert
-#include <iostream>
+#include <iostream> // for std::cout, std::cerr, std::endl
 #include <fstream>  // for std::ifstream
-#include <raylib.h> // for Drawing on screen (Improvement: Access library via interface)
 
 #define LogLoadDebug(str, entityName, componentName) std::cout << str << " - Component: " << componentName << ", Entity: " << entityName << std::endl
 #define LogLoadError(str, entityName, componentName) std::cerr << str << " - Component: " << componentName << ", Entity: " << entityName << std::endl
@@ -27,7 +26,7 @@ bool CMap::LoadMap(const char* fileName)
 	}
 
 	CComponentDataLoader& componentDataLoader = CGame::GetInstance().GetComponentDataLoader();
-	CEntityManager& entityManager = CGame::GetInstance().GetEntityManager();
+	CEntityComponentSystem& entityComponentSystem = CGame::GetInstance().GetEntityComponentSystem();
 
 	// Map is an array of entities
 	for (const auto& entity : data)
@@ -41,7 +40,7 @@ bool CMap::LoadMap(const char* fileName)
 		assert(entity.contains("components"));
 		assert(entity["components"].is_array());
 
-		EntityId newEntityId = entityManager.CreateEntity(); // fix
+		EntityId newEntityId = entityComponentSystem.CreateEntity();
 		for (const auto& component : entity["components"])
 		{
 			assert(component.contains("name"));
@@ -60,55 +59,10 @@ bool CMap::LoadMap(const char* fileName)
 
 			LogLoadDebug("Loaded ", entityName, componentName);
 		}
-
-		//m_entities.emplace_back(std::move(newEntity));
 	}
 
 	iss.close();
 	return true;
-}
-
-//------------------------------------------------------------------
-void CMap::OnInit()
-{
-	// TO DO: Move to graphics system
-	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Larian Test");
-	SetTargetFPS(60);
-}
-
-//------------------------------------------------------------------
-void CMap::OnDone()
-{
-}
-
-//------------------------------------------------------------------
-void CMap::Update(const float& deltaTime)
-{
-}
-
-//------------------------------------------------------------------
-void CMap::Render(const float& deltaTime)
-{
-	// TO DO: Move to graphics system
-	BeginDrawing();
-	ClearBackground(BLACK);
-
-	// Test
-	ball_x += ball_speed_x;
-	ball_y += ball_speed_y;
-	if (ball_x + ball_radius >= SCREEN_WIDTH || ball_x - ball_radius <= 0)
-	{
-		ball_speed_x *= -1;
-	}
-	if (ball_y + ball_radius >= SCREEN_HEIGHT || ball_y - ball_radius <= 0)
-	{
-		ball_speed_y *= -1;
-	}
-
-	DrawCircle(ball_x, ball_y, ball_radius, WHITE);
-	//~Test
-
-	EndDrawing();
 }
 
 #undef LogLoadDebug

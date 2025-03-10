@@ -3,33 +3,6 @@
 
 #include "CSystemManager.h"
 
-#include <assert.h>
-
-//------------------------------------------------------------------
-template<typename T>
-std::shared_ptr<T> CSystemManager::RegisterSystem()
-{
-	// Verify there's no System duplicates
-	// System's name is the name of the class
-	const char* systemName = typeid(T).name();
-	assert(m_systems.find(systemName) == m_systems.end());
-
-	std::shared_ptr<T> pSystem = std::make_shared<T>();
-	m_systems.insert({ systemName, pSystem });
-	return pSystem;
-}
-
-//------------------------------------------------------------------
-template<typename T>
-void CSystemManager::SetSystemComponentMask(ComponentMask componentMask)
-{
-	// Verify the System has been registered beforehand
-	const char* systemName = typeid(T).name();
-	assert(m_systems.find(systemName) != m_systems.end());
-
-	m_systemComponentMasks.insert({ systemName, componentMask });
-}
-
 //------------------------------------------------------------------
 void CSystemManager::OnEntityDestroyed(EntityId entityId)
 {

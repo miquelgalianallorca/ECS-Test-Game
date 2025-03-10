@@ -22,8 +22,7 @@
 //   the components it cares about, and skip the rest.
 // - Some components (ie. Transform) can be used by many Systems, and this avoids jumps in accessing
 //   memory between components.
-// - Better encapsulation: A change in a Component wouldn't break the logic of every other Component that
-//   uses it.
+// - Better encapsulation: Less chances to have Component changes break unrelated Systems
 //------------------------------------------------------------------
 
 // Identifies an Entity by being an index to the Entity list in CEntityManager
@@ -49,7 +48,7 @@ public:
 	void SetEntityComponentMask(EntityId entityId, ComponentMask componentMask);
 	ComponentMask GetEntityComponentMask(EntityId entityId) const;
 
-private:	
+private:
 	// When entities are deleted, their EntityId index is made available again
 	// Indexes tracked here to reuse them
 	std::queue<EntityId> m_availableEntityIds;

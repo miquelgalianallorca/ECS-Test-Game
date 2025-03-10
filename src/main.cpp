@@ -3,8 +3,13 @@
 
 #include "CMap.h"
 #include "CGame.h"
+#include "ECS/CEntityComponentSystem.h"
+#include "Systems/CGraphicsSystem.h"
 
+#include <assert.h>
+#include <chrono>
 #include <iostream>
+#include <memory>
 #include <raylib.h>
 
 // Resources & References
@@ -23,11 +28,20 @@
 //
 // Installing MinGW
 // https://code.visualstudio.com/docs/cpp/config-mingw
+//
+// Music
+// https://pixwlk.itch.io/petaporon
+// https://opengameart.org/content/512-sound-effects-8-bit-style
+//
+// Images
+// https://www.aseprite.org/
 // ------------------------------------------------------------------
 
 // Improvement: Logging interface
 #define LogDebug(str) std::cout << str << std::endl
 #define LogError(str) std::cerr << str << std::endl
+
+typedef std::chrono::high_resolution_clock::time_point Time;
 
 //------------------------------------------------------------------
 int main()
@@ -35,10 +49,22 @@ int main()
 	const float UPDATE_TIME = 0.15;
 
 	// Init game singleton
+	LogDebug("Starting game");
 	CGame& game = CGame::GetInstance();
 	game.Init();
 	
+	// Register all game Systems
+	CEntityComponentSystem& entityComponentSystem = game.GetEntityComponentSystem();
+	
+	std::shared_ptr<CGraphicsSystem> pGraphicsSystem = entityComponentSystem.RegisterSystem<CGraphicsSystem>();
+	assert(pGraphicsSystem);
+	pGraphicsSystem->Init();
+
+	//entityComponentSystem.RegisterSystem<CPhysicsSystem>();
+	//entityComponentSystem.RegisterComponent<CMovementSystem>();
+
 	// Set startup map
+	// Improvements: Have a Map manager, handle async loading
 	CMap currentMap;
 	if (!currentMap.LoadMap("resources/arena.json"))
 	{
@@ -46,32 +72,29 @@ int main()
 		return 0;
 	}
 
-	LogDebug("Starting game");
-	currentMap.OnInit();
-
 	// Main loop of the application
-	float lastUpdateTime = 0.f;
-	float lastRenderTime = 0.f;
+	Time lastUpdateTime;
+	Time lastRenderTime;
 	while (!WindowShouldClose())
 	{
 		// Update all components on all entities
-		const float currentTime = 0.f;
-		const float updateDeltaTime = currentTime - lastUpdateTime;
+		const auto currentTime = std::chrono::high_resolution_clock::now();
+		const float updateDeltaTime = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - lastUpdateTime).count();
 		if (updateDeltaTime >= UPDATE_TIME)
 		{
-			currentMap.Update(updateDeltaTime);
+			// pPhysicsSystem->Update(updateDeltaTime);
+			// ...
+
 			lastUpdateTime = currentTime;
 		}
 
 		// Render graphics, animations, etc.
-		const float renderDeltaTime = currentTime - lastRenderTime;
-		currentMap.Render(renderDeltaTime);
+		const float renderDeltaTime = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - lastRenderTime).count();
+		pGraphicsSystem->Update(renderDeltaTime);
 		lastRenderTime = currentTime;
 	}
 
 	LogDebug("Shutting down");
-	currentMap.OnDone();
-
 	CloseWindow();
 }
 
