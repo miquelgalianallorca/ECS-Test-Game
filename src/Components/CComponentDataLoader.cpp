@@ -25,9 +25,9 @@ void CComponentDataLoader::Init()
 	entityComponentSystem.RegisterComponent<SComponentRenderable>();
 
 	// Register all static functions for loading each Component class from data
-	RegisterComponentLoadingFunction("transform", [](const std::string& data){ return SComponentTransform::LoadComponentFromJson(data); });
-	RegisterComponentLoadingFunction("collider", [](const std::string& data){ return SComponentCollider::LoadComponentFromJson(data); });
-	RegisterComponentLoadingFunction("renderable", [](const std::string& data){ return SComponentRenderable::LoadComponentFromJson(data); });
+	RegisterComponentLoadingFunction("transform", [](const std::string& data, EntityId entityId){ SComponentTransform::LoadComponentFromJson(data, entityId); });
+	RegisterComponentLoadingFunction("collider", [](const std::string& data, EntityId entityId){ SComponentCollider::LoadComponentFromJson(data, entityId); });
+	RegisterComponentLoadingFunction("renderable", [](const std::string& data, EntityId entityId){ SComponentRenderable::LoadComponentFromJson(data, entityId); });
 }
 
 //------------------------------------------------------------------
@@ -41,10 +41,10 @@ void CComponentDataLoader::RegisterComponentLoadingFunction(const std::string& c
 }
 
 //------------------------------------------------------------------
-std::shared_ptr<IComponent> CComponentDataLoader::LoadComponentFromJson(const std::string& componentName, const std::string& json)
+void CComponentDataLoader::LoadComponentFromJson(const std::string& componentName, const std::string& json, EntityId entityId)
 {
 	const auto itFunctions = m_componentLoadingFunctions.find(componentName);
 	assert(itFunctions != m_componentLoadingFunctions.end());
 
-	return itFunctions->second(json);
+	return itFunctions->second(json, entityId);
 }

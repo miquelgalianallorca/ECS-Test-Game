@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "ECS/CEntityManager.h" // for EntityId
 #include "IComponent.h"
 
 #include <memory> // for std::shared_ptr
@@ -13,7 +14,7 @@ struct IShape;
 //------------------------------------------------------------------
 struct SComponentCollider : public IComponent
 {
-	static std::shared_ptr<IComponent> LoadComponentFromJson(const std::string& data);
+	static void LoadComponentFromJson(const std::string& data, EntityId entityId);
 
 	float m_velocityX{ 0.f };
 	float m_velocityY{ 0.f };

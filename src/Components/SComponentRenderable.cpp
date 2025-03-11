@@ -2,6 +2,9 @@
 // Project: Larian Test
 
 #include "SComponentRenderable.h"
+
+#include "CGame.h"
+#include "ECS/CEntityComponentSystem.h"
 #include "IShape.h"
 #include "json.hpp"
 
@@ -12,7 +15,7 @@ using nlohmann::json;
 #define LogError(str) std::cerr << str << std::endl
 
 //-------------------------------------------------------------------
-std::shared_ptr<IComponent> SComponentRenderable::LoadComponentFromJson(const std::string& data)
+void SComponentRenderable::LoadComponentFromJson(const std::string& data, EntityId entityId)
 {
 	json componentData = json::parse(data);
 	assert(componentData.contains("r"));
@@ -32,13 +35,13 @@ std::shared_ptr<IComponent> SComponentRenderable::LoadComponentFromJson(const st
 	if (!pShape)
 	{
 		LogError("Invalid Shape data in Renderable component");
-		return nullptr;
+		return;
 	}
 
-	std::shared_ptr<SComponentRenderable> pRenderable = std::make_shared<SComponentRenderable>();
-	pRenderable->m_pShape = pShape;
-	pRenderable->m_layer = componentData["layer"];
-	pRenderable->m_color = TColor
+	SComponentRenderable renderable;
+	renderable.m_pShape = pShape;
+	renderable.m_layer = componentData["layer"];
+	renderable.m_color = TColor
 	{
 		componentData["r"],
 		componentData["g"],
@@ -46,5 +49,6 @@ std::shared_ptr<IComponent> SComponentRenderable::LoadComponentFromJson(const st
 		componentData["a"]
 	};
 
-	return pRenderable;
+	CEntityComponentSystem& entityComponentSystem = CGame::GetInstance().GetEntityComponentSystem();
+	entityComponentSystem.AddComponent<SComponentRenderable>(entityId, renderable);
 }

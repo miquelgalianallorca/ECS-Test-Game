@@ -3,14 +3,15 @@
 
 #pragma once
 
+#include "ECS/CEntityManager.h" // for EntityId
+
 #include <functional>
-#include <memory>
 #include <string>
 #include <unordered_map>
 
 struct IComponent;
 
-typedef std::function<std::shared_ptr<IComponent>(const std::string&)> TComponentLoadingFunctor;
+typedef std::function<void(const std::string&, EntityId)> TComponentLoadingFunctor;
 
 //------------------------------------------------------------------
 class CComponentDataLoader
@@ -23,7 +24,7 @@ public:
 	void RegisterComponentLoadingFunction(const std::string& componentName, const TComponentLoadingFunctor&& function);
 
 	// Create a component from Json data
-	std::shared_ptr<IComponent> LoadComponentFromJson(const std::string& componentName, const std::string& json);
+	void LoadComponentFromJson(const std::string& componentName, const std::string& json, EntityId entityId);
 
 private:
 	// Map of [componentName, loadingFunction] used to create a component from Json data

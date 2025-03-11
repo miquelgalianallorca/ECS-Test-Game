@@ -4,6 +4,7 @@
 #include "CGraphicsSystem.h"
 
 #include "CGame.h"
+#include "Components/IShape.h"
 #include "Components/SComponentCollider.h"
 #include "Components/SComponentRenderable.h"
 #include "Components/SComponentTransform.h"
@@ -39,6 +40,26 @@ void CGraphicsSystem::Update(const float& deltaTime)
 	ball.Update();
 	ball.Draw();
 	//~Test
+
+	CEntityComponentSystem& entityComponentSystem = CGame::GetInstance().GetEntityComponentSystem();
+	//entityComponentSystem.SComponentCollider
+
+	for (const EntityId entityId : m_viewEntityIds)
+	{
+		SComponentTransform& transform = entityComponentSystem.GetComponent<SComponentTransform>(entityId);
+		SComponentRenderable& renderable = entityComponentSystem.GetComponent<SComponentRenderable>(entityId);
+		SComponentCollider& collider = entityComponentSystem.GetComponent<SComponentCollider>(entityId);
+
+		std::shared_ptr<IShape> pShape = renderable.m_pShape;
+		//pShape->Draw(posX, posY, color);
+
+		Color color;
+		color.r = renderable.m_color[0];
+		color.g = renderable.m_color[1];
+		color.b = renderable.m_color[2];
+		color.a = renderable.m_color[3];
+		DrawCircle(transform.m_posX, transform.m_posY, 50.f/*radius*/, color);
+	}
 
 	// End OpenGL pipeline
 	EndDrawing();

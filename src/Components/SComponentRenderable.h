@@ -3,6 +3,7 @@
 
 #pragma once
 
+#include "ECS/CEntityManager.h" // for EntityId
 #include "IComponent.h"
 
 #include <array>
@@ -17,7 +18,7 @@ typedef std::array<int, 4> TColor;
 //------------------------------------------------------------------
 struct SComponentRenderable : public IComponent
 {
-	static std::shared_ptr<IComponent> LoadComponentFromJson(const std::string& data);
+	static void LoadComponentFromJson(const std::string& data, EntityId entityId);
 
 	TColor m_color;
 	int m_layer{ 0 };

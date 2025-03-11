@@ -3,14 +3,14 @@
 
 #pragma once
 
+#include "ECS/CEntityManager.h" // for EntityId
 #include "IComponent.h"
 
-#include <memory> // for std::shared_ptr
 #include <string> // for std::string
 
 struct SComponentTransform : public IComponent
 {
-	static std::shared_ptr<IComponent> LoadComponentFromJson(const std::string& data);
+	static void LoadComponentFromJson(const std::string& data, EntityId entityId);
 
 	float m_posX{ 0.f };
 	float m_posY{ 0.f };

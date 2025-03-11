@@ -2,6 +2,9 @@
 // Project: Larian Test
 
 #include "SComponentCollider.h"
+
+#include "CGame.h"
+#include "ECS/CEntityComponentSystem.h"
 #include "IShape.h"
 #include "json.hpp"
 
@@ -12,7 +15,7 @@ using nlohmann::json;
 #define LogError(str) std::cerr << str << std::endl
 
 //-------------------------------------------------------------------
-std::shared_ptr<IComponent> SComponentCollider::LoadComponentFromJson(const std::string& data)
+void SComponentCollider::LoadComponentFromJson(const std::string& data, EntityId entityId)
 {
 	json componentData = json::parse(data);
 	assert(componentData.contains("velocityX"));
@@ -28,13 +31,14 @@ std::shared_ptr<IComponent> SComponentCollider::LoadComponentFromJson(const std:
 	if (!pShape)
 	{
 		LogError("Invalid Shape data in Collider component");
-		return nullptr;
+		return;
 	}
 
-	std::shared_ptr<SComponentCollider> pCollider = std::make_shared<SComponentCollider>();
-	pCollider->m_pShape = pShape;
-	pCollider->m_velocityX = componentData["velocityX"];
-	pCollider->m_velocityY = componentData["velocityY"];
+	SComponentCollider collider;
+	collider.m_pShape = pShape;
+	collider.m_velocityX = componentData["velocityX"];
+	collider.m_velocityY = componentData["velocityY"];
 
-	return pCollider;
+	CEntityComponentSystem& entityComponentSystem = CGame::GetInstance().GetEntityComponentSystem();
+	entityComponentSystem.AddComponent<SComponentCollider>(entityId, collider);
 }

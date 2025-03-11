@@ -2,6 +2,9 @@
 // Project: Larian Test
 
 #include "SComponentTransform.h"
+
+#include "CGame.h"
+#include "ECS/CEntityComponentSystem.h"
 #include "json.hpp"
 
 #include <assert.h>
@@ -9,7 +12,7 @@
 using json = nlohmann::json;
 
 //-------------------------------------------------------------------
-std::shared_ptr<IComponent> SComponentTransform::LoadComponentFromJson(const std::string& data)
+void SComponentTransform::LoadComponentFromJson(const std::string& data, EntityId entityId)
 {
 	json componentData = json::parse(data);
 	assert(componentData.contains("posX"));
@@ -20,10 +23,11 @@ std::shared_ptr<IComponent> SComponentTransform::LoadComponentFromJson(const std
 	assert(componentData["posY"].is_number_float());
 	assert(componentData["rot"].is_number_float());
 
-	std::shared_ptr<SComponentTransform> pTransform = std::make_shared<SComponentTransform>();
-	pTransform->m_posX = componentData["posX"];
-	pTransform->m_posY = componentData["posY"];
-	pTransform->m_rot = componentData["rot"];
+	SComponentTransform transform;
+	transform.m_posX = componentData["posX"];
+	transform.m_posY = componentData["posY"];
+	transform.m_rot = componentData["rot"];
 
-	return pTransform;
+	CEntityComponentSystem& entityComponentSystem = CGame::GetInstance().GetEntityComponentSystem();
+	entityComponentSystem.AddComponent<SComponentTransform>(entityId, transform);
 }

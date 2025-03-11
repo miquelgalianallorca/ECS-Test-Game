@@ -159,14 +159,14 @@ public:
 	template<typename T>
 	void AddComponent(EntityId entityId, T component)
 	{
-		GetComponentArray<T>()->InsertData(entityId, component);
+		GetComponentArray<T>()->AddEntityData(entityId, component);
 	}
 
 	//----------------------------------------------------------------
 	template<typename T>
 	void RemoveComponent(EntityId entityId)
 	{
-		GetComponentArray<T>()->RemoveData(entityId);
+		GetComponentArray<T>()->RemoveEntityData(entityId);
 	}
 
 	//----------------------------------------------------------------

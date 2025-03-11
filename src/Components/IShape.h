@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include "ECS/CEntityManager.h" // for EntityId
+
 #include <memory> // for shared_ptr
 
 //------------------------------------------------------------------

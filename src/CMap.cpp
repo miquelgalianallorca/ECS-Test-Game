@@ -47,16 +47,8 @@ bool CMap::LoadMap(const char* fileName)
 			assert(component["name"].is_string());
 			const std::string componentName = component["name"];
 
-			// TO DO: send newEntityId to these loading functions
-			// so that the component is registered to the entity via
-			//componentManager.AddComponent<ComponentType>(entityId);
-			std::shared_ptr<IComponent> pComponent = componentDataLoader.LoadComponentFromJson(componentName, component.dump());
-			if (!pComponent)
-			{
-				LogLoadError("Failed to load Component", entityName, componentName);
-				continue;
-			}
-
+			// Loads components from json data and adds them to the Entity
+			componentDataLoader.LoadComponentFromJson(componentName, component.dump(), newEntityId);
 			LogLoadDebug("Loaded ", entityName, componentName);
 		}
 	}
