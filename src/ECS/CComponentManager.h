@@ -173,7 +173,7 @@ public:
 	template<typename T>
 	T& GetComponent(EntityId entityId)
 	{
-		return GetComponentArray<T>()->GetData(entityId);
+		return GetComponentArray<T>()->GetComponent(entityId);
 	}
 
 	//----------------------------------------------------------------
@@ -197,7 +197,7 @@ private:
 		// Verify that the component has been registered
 		const char* typeName = typeid(T).name();
 		assert(m_componentIds.find(typeName) != m_componentIds.end());
-	
-		return std::static_pointer_cast<CComponentArray<T>>(m_componentIds[typeName]);
+
+		return std::static_pointer_cast<CComponentArray<T>>(m_componentArrays[typeName]);
 	}
 };
