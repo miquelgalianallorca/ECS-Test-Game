@@ -5,6 +5,7 @@
 #include "CGame.h"
 #include "ECS/CEntityComponentSystem.h"
 #include "Systems/CGraphicsSystem.h"
+#include "Systems/CPhysicsSystem.h"
 
 #include <assert.h>
 #include <chrono>
@@ -60,8 +61,9 @@ int main()
 	assert(pGraphicsSystem);
 	pGraphicsSystem->Init();
 
-	//entityComponentSystem.RegisterSystem<CPhysicsSystem>();
-	//entityComponentSystem.RegisterComponent<CMovementSystem>();
+	std::shared_ptr<CPhysicsSystem> pPhysicsSystem = entityComponentSystem.RegisterSystem<CPhysicsSystem>();
+	assert(pPhysicsSystem);
+	pPhysicsSystem->Init();
 
 	// Set startup map
 	// Improvements: Have a Map manager, handle async loading
@@ -73,8 +75,8 @@ int main()
 	}
 
 	// Main loop of the application
-	Time lastUpdateTime;
-	Time lastRenderTime;
+	Time lastUpdateTime = std::chrono::high_resolution_clock::now();
+	Time lastRenderTime = std::chrono::high_resolution_clock::now();
 	while (!WindowShouldClose())
 	{
 		// Update all components on all entities
@@ -82,9 +84,7 @@ int main()
 		const float updateDeltaTime = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - lastUpdateTime).count();
 		if (updateDeltaTime >= UPDATE_TIME)
 		{
-			// pPhysicsSystem->Update(updateDeltaTime);
-			// ...
-
+			pPhysicsSystem->Update(updateDeltaTime);
 			lastUpdateTime = currentTime;
 		}
 

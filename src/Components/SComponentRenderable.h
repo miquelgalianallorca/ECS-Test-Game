@@ -24,4 +24,8 @@ struct SComponentRenderable : public IComponent
 	int m_layer{ 0 };
 	std::shared_ptr<IShape> m_pShape;
 	// TO DO - offsetX, offsetY
+
+	// For drawing interpolation
+	float m_lastDrawPosX{ 0.f };
+	float m_lastDrawPosY{ 0.f };
 };

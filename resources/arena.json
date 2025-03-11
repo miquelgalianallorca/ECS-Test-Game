@@ -6,7 +6,7 @@
 			[
 				{ "name": "transform", "posX": 0.0, "posY": 0.0, "rot": 0.0 },
 				{
-					"name": "collider", "offsetX": 0.0, "offsetY": 0.0, "velocityX": 0.0, "velocityY": 0.0 ,
+					"name": "collider", "offsetX": 0.0, "offsetY": 0.0, "velocityX": 25.0, "velocityY": 0.0 ,
 					"shape": { "type": "rectangle", "sizeX": 10.0, "sizeY": 10.0 }
 				},
 				{
