@@ -5,6 +5,7 @@
 #include "json.hpp"
 
 #include <iostream>
+#include <raylib.h>
 
 using nlohmann::json;
 
@@ -43,6 +44,30 @@ std::shared_ptr<IShape> IShape::LoadFromJson(const std::string& data)
 
 	LogError("Detected invalid type", type.c_str());
 	return nullptr;
+}
+
+//------------------------------------------------------------------
+Color ToRaylibColor(const TColor& _color)
+{
+	return Color
+	{
+		static_cast<unsigned char>(_color[0]),
+		static_cast<unsigned char>(_color[1]),
+		static_cast<unsigned char>(_color[2]),
+		static_cast<unsigned char>(_color[3])
+	};
+}
+
+//------------------------------------------------------------------
+void SRectangle::Draw(const float& posX, const float& posY, const TColor& color)
+{
+	DrawRectangle(posX, posY, m_sizeX, m_sizeY, ToRaylibColor(color));
+}
+
+//------------------------------------------------------------------
+void SCircle::Draw(const float& posX, const float& posY, const TColor& color)
+{
+	DrawCircle(posX, posY, m_radius, ToRaylibColor(color));
 }
 
 #undef LogDebug

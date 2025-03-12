@@ -9,6 +9,14 @@
 #include <memory> // for std::shared_ptr
 
 //------------------------------------------------------------------
+// Game global variables
+const float UPDATE_TIME = 0.15f;
+
+const int SCREEN_WIDTH = 1280;
+const int SCREEN_HEIGHT = 720;
+//------------------------------------------------------------------
+
+//------------------------------------------------------------------
 // Singleton - Contains component manager and game systems
 class CGame
 {

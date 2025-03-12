@@ -47,8 +47,6 @@ typedef std::chrono::high_resolution_clock::time_point Time;
 //------------------------------------------------------------------
 int main()
 {
-	const float UPDATE_TIME = 0.15;
-
 	// Init game singleton
 	LogDebug("Starting game");
 	CGame& game = CGame::GetInstance();

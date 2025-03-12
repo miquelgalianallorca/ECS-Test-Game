@@ -13,11 +13,4 @@ class CGraphicsSystem : public CSystem
 public:
 	void Init();
 	void Update(const float& deltaTime);
-
-private:
-	// Test
-	const int SCREEN_WIDTH = 1280;
-	const int SCREEN_HEIGHT = 720;
-	Ball ball;
-	//~Test
 };

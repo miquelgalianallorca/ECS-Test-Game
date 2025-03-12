@@ -24,11 +24,19 @@ void CPhysicsSystem::Init()
 //------------------------------------------------------------------
 void CPhysicsSystem::Update(const float& deltaTime)
 {
+	Time currentTime = std::chrono::high_resolution_clock::now();
+
 	CEntityComponentSystem& entityComponentSystem = CGame::GetInstance().GetEntityComponentSystem();
 	for (const EntityId entityId : m_viewEntityIds)
 	{
 		SComponentTransform& transform = entityComponentSystem.GetComponent<SComponentTransform>(entityId);
 		SComponentCollider& collider = entityComponentSystem.GetComponent<SComponentCollider>(entityId);
+
+		// Track state before Update for interpolation (ie. CGraphicsSystem)
+		transform.m_lastUpdateTime = currentTime;
+		transform.m_lastPosX = transform.m_posX;
+		transform.m_lastPosY = transform.m_posY;
+		transform.m_lastRot = transform.m_rot;
 
 		// TO DO: Update velocity through acceleration
 		// ...
