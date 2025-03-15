@@ -6,6 +6,7 @@
 #include "ECS/CEntityComponentSystem.h"
 #include "Systems/CGraphicsSystem.h"
 #include "Systems/CPhysicsSystem.h"
+#include "Systems/CPlayerControllerSystem.h"
 
 #include <assert.h>
 #include <chrono>
@@ -64,6 +65,10 @@ int main()
 	assert(pPhysicsSystem);
 	pPhysicsSystem->Init();
 
+	std::shared_ptr<CPlayerControllerSystem> pPlayerControllerSystem = entityComponentSystem.RegisterSystem<CPlayerControllerSystem>();
+	assert(pPlayerControllerSystem);
+	pPlayerControllerSystem->Init();
+
 	// Set startup map
 	// Improvements: Have a Map manager, handle async loading
 	CMap currentMap;
@@ -83,6 +88,7 @@ int main()
 		const float updateDeltaTime = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - lastUpdateTime).count();
 		if (updateDeltaTime >= UPDATE_TIME)
 		{
+			pPlayerControllerSystem->Update(updateDeltaTime);
 			pPhysicsSystem->Update(updateDeltaTime);
 			lastUpdateTime = currentTime;
 		}

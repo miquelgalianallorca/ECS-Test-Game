@@ -21,10 +21,12 @@ void SComponentCollider::LoadComponentFromJson(const std::string& data, EntityId
 	assert(componentData.contains("velocityX"));
 	assert(componentData.contains("velocityY"));
 	assert(componentData.contains("shape"));
+	assert(componentData.contains("dragEnabled"));
 	//assert(componentData.contains("velocityRot"));
 
 	assert(componentData["velocityX"].is_number_float());
 	assert(componentData["velocityY"].is_number_float());
+	assert(componentData["dragEnabled"].is_boolean());
 	//assert(componentData["velocityRot"].is_number_float());
 
 	std::shared_ptr<IShape> pShape = IShape::LoadFromJson(componentData["shape"].dump());
@@ -38,6 +40,7 @@ void SComponentCollider::LoadComponentFromJson(const std::string& data, EntityId
 	collider.m_pShape = pShape;
 	collider.m_velocityX = componentData["velocityX"];
 	collider.m_velocityY = componentData["velocityY"];
+	collider.m_bDragEnabled = componentData["dragEnabled"];
 
 	CEntityComponentSystem& entityComponentSystem = CGame::GetInstance().GetEntityComponentSystem();
 	entityComponentSystem.AddComponent<SComponentCollider>(entityId, collider);

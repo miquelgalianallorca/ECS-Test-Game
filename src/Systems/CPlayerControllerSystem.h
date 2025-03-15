@@ -6,7 +6,7 @@
 #include "ECS/CSystemManager.h"
 
 //------------------------------------------------------------------
-class CPhysicsSystem : public CSystem
+class CPlayerControllerSystem : public CSystem
 {
 public:
 	void Init();

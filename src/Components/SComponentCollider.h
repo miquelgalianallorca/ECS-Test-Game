@@ -19,8 +19,11 @@ struct SComponentCollider : public IComponent
 	float m_velocityX{ 0.f };
 	float m_velocityY{ 0.f };
 	//float m_velocityRot{ 0.f };
-	
 	std::shared_ptr<IShape> m_pShape;
+	bool m_bDragEnabled{ false };
+
+	float m_accelerationX{ 0.f };
+	float m_accelerationY{ 0.f };
 	// TO DO - offsetX, offsetY
 	// TO DO - mass and acceleration? Turn into rigidbody?
 };
