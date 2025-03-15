@@ -27,6 +27,13 @@ void CGraphicsSystem::Init()
 
 	// Raylib
 	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Larian Test");
+
+	//Camera2D camera = { 0 };
+  //camera.target = (Vector2){ player.x + 20.0f, player.y + 20.0f };
+  //camera.offset = (Vector2){ screenWidth/2.0f, screenHeight/2.0f };
+  //camera.rotation = 0.0f;
+  //camera.zoom = 1.0f;
+
 	SetTargetFPS(120);
 }
 
@@ -38,8 +45,11 @@ void CGraphicsSystem::Update(const float& deltaTime)
 	ClearBackground(BLACK);
 
 	Time currentTime = std::chrono::high_resolution_clock::now();
-
 	CEntityComponentSystem& entityComponentSystem = CGame::GetInstance().GetEntityComponentSystem();
+
+	// Set camera perspective
+	//BeginMode2D(camera);
+
 	for (const EntityId entityId : m_viewEntityIds)
 	{
 		SComponentTransform& transform = entityComponentSystem.GetComponent<SComponentTransform>(entityId);
@@ -59,6 +69,12 @@ void CGraphicsSystem::Update(const float& deltaTime)
 		assert(pShape);
 		pShape->Draw(drawPosX, drawPosY, renderable.m_color);
 	}
+
+	// Stop camera perspective
+	//EndMode2D();
+
+	// Draw in camera space (eg. UI)
+	// ...
 
 	// End OpenGL pipeline
 	EndDrawing();

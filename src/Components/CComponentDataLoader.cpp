@@ -7,6 +7,7 @@
 #include "ECS/CEntityComponentSystem.h"
 #include "IComponent.h"
 #include "SComponentCollider.h"
+#include "SComponentPlayer.h"
 #include "SComponentRenderable.h"
 #include "SComponentTransform.h"
 
@@ -23,11 +24,13 @@ void CComponentDataLoader::Init()
 	entityComponentSystem.RegisterComponent<SComponentTransform>();
 	entityComponentSystem.RegisterComponent<SComponentCollider>();
 	entityComponentSystem.RegisterComponent<SComponentRenderable>();
+	entityComponentSystem.RegisterComponent<SComponentPlayer>();
 
 	// Register all static functions for loading each Component class from data
 	RegisterComponentLoadingFunction("transform", [](const std::string& data, EntityId entityId){ SComponentTransform::LoadComponentFromJson(data, entityId); });
 	RegisterComponentLoadingFunction("collider", [](const std::string& data, EntityId entityId){ SComponentCollider::LoadComponentFromJson(data, entityId); });
 	RegisterComponentLoadingFunction("renderable", [](const std::string& data, EntityId entityId){ SComponentRenderable::LoadComponentFromJson(data, entityId); });
+	RegisterComponentLoadingFunction("player", [](const std::string& data, EntityId entityId){ SComponentPlayer::LoadComponentFromJson(data, entityId); });
 }
 
 //------------------------------------------------------------------
