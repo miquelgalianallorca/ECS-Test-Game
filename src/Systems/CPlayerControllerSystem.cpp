@@ -20,7 +20,7 @@ void CPlayerControllerSystem::Init()
 	ComponentMask playerSystemComponentMask;
 	playerSystemComponentMask.set(entityComponentSystem.GetComponentId<SComponentTransform>());
 	playerSystemComponentMask.set(entityComponentSystem.GetComponentId<SComponentPlayer>());
-	playerSystemComponentMask.set(entityComponentSystem.GetComponentId<SComponentPlayer>());
+	playerSystemComponentMask.set(entityComponentSystem.GetComponentId<SComponentCollider>());
 	
 	entityComponentSystem.SetSystemComponentMask<CPlayerControllerSystem>(playerSystemComponentMask);
 }
