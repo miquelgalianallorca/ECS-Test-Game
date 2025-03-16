@@ -1,6 +1,21 @@
 {
-	"entity":
-	{
+	"spritesheets":
+	[
+		{
+			"name": "bandit", "path": "resources/spritesheet_bandit.png", "spriteSizeX": 0.0, "spriteSizeY": 0.0,
+			"animations":
+			[
+				{ "name": "idle",   "row": 0, "numSprites": 4 },
+				{ "name": "move",   "row": 1, "numSprites": 8 },
+				{ "name": "attack", "row": 2, "numSprites": 5 },
+				{ "name": "hit",    "row": 3, "numSprites": 3 },
+				{ "name": "die",    "row": 4, "numSprites": 6 }
+			]
+		}
+	],
+	"entities":
+	[
+		{
 			"name": "TestEntity",
 			"components":
 			[
@@ -18,5 +33,6 @@
 					"name":"player", "maxSpeed": 250.0, "movementAcceleration": 200.0
 				}
 			]
-	}
+		}
+	]
 }

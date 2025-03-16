@@ -27,6 +27,12 @@ CComponentDataLoader& CGame::GetComponentDataLoader()
 }
 
 //------------------------------------------------------------------
+CSpriteDataLoader& CGame::GetSpriteDataLoader()
+{
+	return m_spriteDataLoader;
+}
+
+//------------------------------------------------------------------
 CEntityComponentSystem& CGame::GetEntityComponentSystem()
 {
 	return m_entityComponentSystem;

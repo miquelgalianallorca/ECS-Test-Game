@@ -4,6 +4,7 @@
 #pragma once
 
 #include "Components/CComponentDataLoader.h"
+#include "Components/CSpriteDataLoader.h"
 #include "ECS/CEntityComponentSystem.h"
 
 #include <memory> // for std::shared_ptr
@@ -29,6 +30,7 @@ public:
 
 	// Access game systems
 	CComponentDataLoader& GetComponentDataLoader();
+	CSpriteDataLoader& GetSpriteDataLoader();
 	CEntityComponentSystem& GetEntityComponentSystem();
 
 private:
@@ -42,15 +44,13 @@ private:
 	// Handles loading components from data
 	CComponentDataLoader m_componentDataLoader;
 
+	// Handles loading spritesheet textures from data
+	// RenderableComponent sprites can just reference data loaded once in the DataLoader
+	CSpriteDataLoader m_spriteDataLoader;
+
 	// Entity Component System (ECS) wrapper
 	CEntityComponentSystem m_entityComponentSystem;
 
-	//CGraphicsSystem m_graphicsSystem;
-	//CPhysicsSystem m_physicsSystem;
-
 	// Handles loading maps, switching maps, async loading?
 	//CMapManager m_mapManager;
-
-	// Handles mouse & keyboard input
-	//CInputManager m_inputManager;
 };

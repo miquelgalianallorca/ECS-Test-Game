@@ -13,6 +13,25 @@ using nlohmann::json;
 #define LogError(str, type) std::cerr << str << " - Type: " << type << std::endl
 
 //------------------------------------------------------------------
+S2DModel::EAnimationType GetAnimationType(const std::string& animationTypeStr)
+{
+	if (animationTypeStr == "idle")
+		return S2DModel::EAnimationType::Idle;
+	if (animationTypeStr == "move")
+		return S2DModel::EAnimationType::Move;
+	if (animationTypeStr == "attack")
+		return S2DModel::EAnimationType::Attack;
+	if (animationTypeStr == "hit")
+		return S2DModel::EAnimationType::Hit;
+	if (animationTypeStr == "die")
+		return S2DModel::EAnimationType::Die;
+
+	// Verify unsupported AnimationType
+	assert(false);
+	return S2DModel::EAnimationType::Idle;
+}
+
+//------------------------------------------------------------------
 std::shared_ptr<IShape> IShape::LoadFromJson(const std::string& data)
 {
 	json shapeData = json::parse(data);
@@ -41,6 +60,32 @@ std::shared_ptr<IShape> IShape::LoadFromJson(const std::string& data)
 		pCircle->m_radius = shapeData["radius"];
 		return pCircle;
 	}
+	else if (type == "2dmodel")
+	{
+		assert(shapeData.contains("spritesheet"));
+		assert(shapeData.contains("frameLength"));
+		assert(shapeData.contains("animations"));
+
+		assert(shapeData["spritesheet"].is_string());
+		assert(shapeData["frameLength"].is_number_float());
+		assert(shapeData["animations"].is_array());
+
+		std::shared_ptr<S2DModel> p2DModel = std::make_shared<S2DModel>();
+		p2DModel->m_spriteSheet = shapeData["spritesheet"];
+		p2DModel->m_frameLength = shapeData["frameLength"];
+
+		for (const json& animationData : shapeData["animations"])
+		{
+			assert(animationData.contains("type"));
+			assert(animationData.contains("name"));
+			assert(shapeData["type"].is_string());
+			assert(shapeData["name"].is_string());
+
+			p2DModel->m_animations.emplace(GetAnimationType(shapeData["type"]), shapeData["name"]);
+		}
+
+		return p2DModel;
+	}
 
 	LogError("Detected invalid type", type.c_str());
 	return nullptr;
@@ -68,6 +113,22 @@ void SRectangle::Draw(const float& posX, const float& posY, const TColor& color)
 void SCircle::Draw(const float& posX, const float& posY, const TColor& color)
 {
 	DrawCircle(posX, posY, m_radius, ToRaylibColor(color));
+}
+
+//------------------------------------------------------------------
+void S2DModel::Draw(const float& posX, const float& posY, const TColor& color)
+{
+	// Access data: Get sprite of current animation at current index
+	m_currentFrameIndex;
+	const std::string& currentAnimation = m_animations[m_currentAnimation];
+
+	// Get these from loaded animation manager
+	//const Texture2D texture;
+	//const Rectangle frameRectangle; // To select a part of the texture
+
+	// Draw sprite
+	//Vector2 position{ posX, posY };
+	//DrawTextureRec(texture, frameRectangle, position, WHITE);
 }
 
 #undef LogDebug

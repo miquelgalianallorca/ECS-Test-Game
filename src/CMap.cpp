@@ -25,11 +25,23 @@ bool CMap::LoadMap(const char* fileName)
 		return false;
 	}
 
-	CComponentDataLoader& componentDataLoader = CGame::GetInstance().GetComponentDataLoader();
-	CEntityComponentSystem& entityComponentSystem = CGame::GetInstance().GetEntityComponentSystem();
+	CGame& game = CGame::GetInstance();
+	CComponentDataLoader& componentDataLoader = game.GetComponentDataLoader();
+	CSpriteDataLoader& spriteDataLoader = game.GetSpriteDataLoader();
+	CEntityComponentSystem& entityComponentSystem = game.GetEntityComponentSystem();
 
-	// Map is an array of entities
-	for (const auto& entity : data)
+	// Map has an array of SpriteSheets
+	assert(data.contains("spritesheets"));
+	assert(data["spritesheets"].is_array());
+	for (const auto& spritesheet : data["spritesheets"])
+	{
+		spriteDataLoader.LoadSpriteSheetFromJson(spritesheet.dump());
+	}
+
+	// Map has an array of Entities
+	assert(data.contains("entities"));
+	assert(data["entities"].is_array());
+	for (const auto& entity : data["entities"])
 	{
 		// Entities must have a name
 		assert(entity.contains("name"));
