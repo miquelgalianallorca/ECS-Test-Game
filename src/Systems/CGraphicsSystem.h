@@ -5,8 +5,6 @@
 
 #include "ECS/CSystemManager.h"
 
-#include "ball.h" // just testing
-
 //------------------------------------------------------------------
 class CGraphicsSystem : public CSystem
 {
