@@ -42,7 +42,7 @@ void CGraphicsSystem::Update(const float& deltaTime)
 {
 	// Start OpenGL pipeline
 	BeginDrawing();
-	ClearBackground(BLACK);
+	ClearBackground(GREEN);
 
 	Time currentTime = std::chrono::high_resolution_clock::now();
 	CEntityComponentSystem& entityComponentSystem = CGame::GetInstance().GetEntityComponentSystem();

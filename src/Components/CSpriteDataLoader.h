@@ -37,8 +37,9 @@ private:
 		std::unordered_map<std::string, SAnimation> m_animations;
 
 		// To help calculate each Sprite position in the SpriteSheet
-		float m_spriteSizeX{ 0.f };
-		float m_spriteSizeY{ 0.f };
+		uint8_t m_spriteSizeX{ 0 };
+		uint8_t m_spriteSizeY{ 0 };
+		uint8_t m_padding{ 0 };
 	};
 
 	// Loaded SpriteSheets, mapped by SpriteSheet name

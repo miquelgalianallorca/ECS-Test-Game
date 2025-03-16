@@ -49,6 +49,8 @@ struct S2DModel : public IShape
 
 	// Name of the Spritesheet being used by the Model
 	std::string m_spriteSheet;
+	float m_sizeX{ 0.f };
+	float m_sizeY{ 0.f };
 
 	// Framerate of the animation
 	// Improvement: Change running animation speed depending on character speed?

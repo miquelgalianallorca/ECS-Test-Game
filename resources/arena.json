@@ -2,7 +2,7 @@
 	"spritesheets":
 	[
 		{
-			"name": "bandit", "path": "resources/spritesheet_bandit.png", "spriteSizeX": 0.0, "spriteSizeY": 0.0,
+			"name": "leader", "path": "resources/spritesheet_leader.png", "spriteSizeX": 32, "spriteSizeY": 32, "padding": 4,
 			"animations":
 			[
 				{ "name": "idle",   "row": 0, "numSprites": 4 },
@@ -27,7 +27,18 @@
 				},
 				{
 					"name": "renderable",  "offsetX": 0.0, "offsetY": 0.0,  "r": 255, "g": 0, "b": 0, "a": 255, "layer": 0,
-					"shape": { "type": "rectangle", "sizeX": 100.0, "sizeY": 100.0 }
+					"shape":
+					{
+						"type": "2dmodel", "sizeX": 100.0, "sizeY": 100.0, "frameLength": 0.125, "spritesheet": "leader",
+						"animations" :
+						[
+							{ "type": "idle",   "name": "idle" },
+							{ "type": "move",   "name": "move" },
+							{ "type": "attack", "name": "attack" },
+							{ "type": "hit",    "name": "hit" },
+							{ "type": "die",    "name": "die" }
+						]
+					}
 				},
 				{
 					"name":"player", "maxSpeed": 250.0, "movementAcceleration": 200.0

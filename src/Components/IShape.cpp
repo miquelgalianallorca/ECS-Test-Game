@@ -68,23 +68,29 @@ std::shared_ptr<IShape> IShape::LoadFromJson(const std::string& data)
 		assert(shapeData.contains("spritesheet"));
 		assert(shapeData.contains("frameLength"));
 		assert(shapeData.contains("animations"));
+		assert(shapeData.contains("sizeX"));
+		assert(shapeData.contains("sizeY"));
 
 		assert(shapeData["spritesheet"].is_string());
 		assert(shapeData["frameLength"].is_number_float());
 		assert(shapeData["animations"].is_array());
+		assert(shapeData["sizeX"].is_number_float());
+		assert(shapeData["sizeY"].is_number_float());
 
 		std::shared_ptr<S2DModel> p2DModel = std::make_shared<S2DModel>();
 		p2DModel->m_spriteSheet = shapeData["spritesheet"];
 		p2DModel->m_frameLength = shapeData["frameLength"];
+		p2DModel->m_sizeX = shapeData["sizeX"];
+		p2DModel->m_sizeY = shapeData["sizeY"];
 
 		for (const json& animationData : shapeData["animations"])
 		{
 			assert(animationData.contains("type"));
 			assert(animationData.contains("name"));
-			assert(shapeData["type"].is_string());
-			assert(shapeData["name"].is_string());
+			assert(animationData["type"].is_string());
+			assert(animationData["name"].is_string());
 
-			p2DModel->m_animations.emplace(GetAnimationType(shapeData["type"]), shapeData["name"]);
+			p2DModel->m_animations.emplace(GetAnimationType(animationData["type"]), animationData["name"]);
 		}
 
 		return p2DModel;
@@ -129,15 +135,19 @@ void S2DModel::Draw(const float& posX, const float& posY, const TColor& color)
 	Rectangle frameRectangle = spriteDataLoader.GetFrameRectangle(m_spriteSheet, currentAnimation, m_currentFrameIndex);
 
 	// Draw sprite
-	//Vector2 position{ posX, posY };
-	Rectangle drawRectangle;
-	//DrawTextureRec(texture, frameRectangle, position, WHITE);
+	Vector2 pivot{ 0.f, 0.f };
+	Rectangle drawRectangle
+	{
+		posX,
+		posY,
+		m_sizeX,
+		m_sizeY
+	};
 
 	// sourceRec defines the part of the texture we use for drawing
 	// destRec defines the rectangle where our texture part will fit (scaling it to fit)
 	// origin defines the point of the texture used as reference for rotation and scaling
 	// rotation defines the texture rotation (using origin as rotation point)
-	Vector2 pivot{ 0.f, 0.f };
 	DrawTexturePro(texture, frameRectangle /*sourceRec*/, drawRectangle /*destRec*/, pivot /*origin*/, 0.f /*rotation*/, WHITE);
 }
 

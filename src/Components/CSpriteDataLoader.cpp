@@ -17,12 +17,14 @@ void CSpriteDataLoader::LoadSpriteSheetFromJson(const std::string& data)
 	assert(spriteSheetData.contains("path"));
 	assert(spriteSheetData.contains("spriteSizeX"));
 	assert(spriteSheetData.contains("spriteSizeY"));
+	assert(spriteSheetData.contains("padding"));
 	assert(spriteSheetData.contains("animations"));
 
 	assert(spriteSheetData["name"].is_string());
 	assert(spriteSheetData["path"].is_string());
-	assert(spriteSheetData["spriteSizeX"].is_number_float());
-	assert(spriteSheetData["spriteSizeY"].is_number_float());
+	assert(spriteSheetData["spriteSizeX"].is_number_unsigned());
+	assert(spriteSheetData["spriteSizeY"].is_number_unsigned());
+	assert(spriteSheetData["padding"].is_number_unsigned());
 	assert(spriteSheetData["animations"].is_array());
 
 	const std::string& spriteSheetName = spriteSheetData["name"];
@@ -33,6 +35,7 @@ void CSpriteDataLoader::LoadSpriteSheetFromJson(const std::string& data)
 	spriteSheet.m_texture = LoadTexture(path.c_str());
 	spriteSheet.m_spriteSizeX = spriteSheetData["spriteSizeX"];
 	spriteSheet.m_spriteSizeY = spriteSheetData["spriteSizeY"];
+	spriteSheet.m_padding = spriteSheetData["padding"];
 
 	for (const json& animationData : spriteSheetData["animations"])
 	{
@@ -72,12 +75,14 @@ Rectangle CSpriteDataLoader::GetFrameRectangle(const std::string& spriteSheetNam
 
 	// Verify the frame index exists for that Animation
 	assert(frameIndex < animation.m_numSprites);
+	uint8_t paddingX = spriteSheet.m_padding * (frameIndex + 1);
+	uint8_t paddingY = spriteSheet.m_padding * (animation.m_row + 1);
 	Rectangle frameRectangle
 	{
-		frameIndex * spriteSheet.m_spriteSizeX,      /*x*/
-		animation.m_row * spriteSheet.m_spriteSizeY, /*y*/
-		spriteSheet.m_spriteSizeX,                   /*width*/
-		spriteSheet.m_spriteSizeY                    /*height*/
+		static_cast<float>(frameIndex * spriteSheet.m_spriteSizeX) + paddingX,      /*x*/
+		static_cast<float>(animation.m_row * spriteSheet.m_spriteSizeY) + paddingY, /*y*/
+		static_cast<float>(spriteSheet.m_spriteSizeX),                              /*width*/
+		static_cast<float>(spriteSheet.m_spriteSizeY)                               /*height*/
 	};
 	return frameRectangle;
 }
