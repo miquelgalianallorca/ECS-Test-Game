@@ -2,6 +2,9 @@
 // Project: Larian Test
 
 #include "IShape.h"
+
+#include "CGame.h"
+#include "Components/CSpriteDataLoader.h"
 #include "json.hpp"
 
 #include <iostream>
@@ -119,16 +122,23 @@ void SCircle::Draw(const float& posX, const float& posY, const TColor& color)
 void S2DModel::Draw(const float& posX, const float& posY, const TColor& color)
 {
 	// Access data: Get sprite of current animation at current index
-	m_currentFrameIndex;
+	CSpriteDataLoader& spriteDataLoader = CGame::GetInstance().GetSpriteDataLoader();
+	const Texture2D& texture = spriteDataLoader.GetTexture(m_spriteSheet);
+	
 	const std::string& currentAnimation = m_animations[m_currentAnimation];
-
-	// Get these from loaded animation manager
-	//const Texture2D texture;
-	//const Rectangle frameRectangle; // To select a part of the texture
+	Rectangle frameRectangle = spriteDataLoader.GetFrameRectangle(m_spriteSheet, currentAnimation, m_currentFrameIndex);
 
 	// Draw sprite
 	//Vector2 position{ posX, posY };
+	Rectangle drawRectangle;
 	//DrawTextureRec(texture, frameRectangle, position, WHITE);
+
+	// sourceRec defines the part of the texture we use for drawing
+	// destRec defines the rectangle where our texture part will fit (scaling it to fit)
+	// origin defines the point of the texture used as reference for rotation and scaling
+	// rotation defines the texture rotation (using origin as rotation point)
+	Vector2 pivot{ 0.f, 0.f };
+	DrawTexturePro(texture, frameRectangle /*sourceRec*/, drawRectangle /*destRec*/, pivot /*origin*/, 0.f /*rotation*/, WHITE);
 }
 
 #undef LogDebug
