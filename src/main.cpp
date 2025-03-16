@@ -4,6 +4,7 @@
 #include "CMap.h"
 #include "CGame.h"
 #include "ECS/CEntityComponentSystem.h"
+#include "Systems/CAnimationControllerSystem.h"
 #include "Systems/CGraphicsSystem.h"
 #include "Systems/CPhysicsSystem.h"
 #include "Systems/CPlayerControllerSystem.h"
@@ -69,6 +70,10 @@ int main()
 	assert(pPlayerControllerSystem);
 	pPlayerControllerSystem->Init();
 
+	std::shared_ptr<CAnimationControllerSystem> pAnimationControllerSystem = entityComponentSystem.RegisterSystem<CAnimationControllerSystem>();
+	assert(pAnimationControllerSystem);
+	pAnimationControllerSystem->Init();
+
 	// Set startup map
 	// Improvements: Have a Map manager, handle async loading
 	CMap currentMap;
@@ -89,7 +94,9 @@ int main()
 		if (updateDeltaTime >= UPDATE_TIME)
 		{
 			pPlayerControllerSystem->Update(updateDeltaTime);
+			pAnimationControllerSystem->Update(updateDeltaTime);
 			pPhysicsSystem->Update(updateDeltaTime);
+
 			lastUpdateTime = currentTime;
 		}
 
