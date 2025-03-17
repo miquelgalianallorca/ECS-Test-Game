@@ -18,6 +18,6 @@ Built up from the <a href="https://github.com/educ8s/Raylib-CPP-Starter-Template
 <br>
 <br>
 <p align="center">
-| 🌍 <a href="https://www.linkedin.com/in/miquelgalianallorca/">My LinkedIn</a> | <br>
-| 🐈 <a href="https://github.com/miquelgalianallorca">My GitHub</a>
+🌍 <a href="https://www.linkedin.com/in/miquelgalianallorca/">My LinkedIn</a><br>
+🐈 <a href="https://github.com/miquelgalianallorca">My GitHub</a>
 </p>
