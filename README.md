@@ -1,29 +1,23 @@
-# Raylib-CPP-Starter-Template-for-VSCODE-V2
-Raylib C++ Starter Template for Visual Studio Code on Windows.
-This demo project contains a bouncing ball raylib example program.
-It works with raylib version 5.0. Tested on both Windows 10 and Windows 11.
+# EntityComponentSystem Gamedev Test
+By Miquel Galiana Llorca.
+Small game engine demo developed in C++ as portfolio showcase and interview test.
+Built up from the <a href="https://github.com/educ8s/Raylib-CPP-Starter-Template-for-VSCODE-V2">Raylib C++ Starter Template</a> for Visual Studio Code on Windows.
 
-# How to use this template
-1. Double click on the main.code-workspace file. This will open the template in VS Code.
-2. From the Explorer Window of VS Code navigate to the src folder and double click on the main.cpp file.
-3. Press F5 on the keyboard to compile and run the program.
+# Included in this project
+- Implementation of a pure Entity Component System
+- Data-driven approach to settings and maps
+- 2D Graphics with smooth interpolated drawing
+- Physics based movement
+- 2D Collisions
 
-# What's changed
-The template now uses folders for better organizion of the files. So, all the source code now lives in the src folder.
-
-# Video Tutorial
-
-<p align="center">
-  <img src="preview.jpg" alt="" width="800">
-</p>
-
-<p align="center">
-🎥 <a href="https://www.youtube.com/watch?v=PaAcVk5jUd8">Video Tutorial on YouTube</a>
-</p>
+# Resources
+- <a href="https://www.raylib.com/index.html">Raylib library</a>
+- <a href="https://github.com/nlohmann/json">Json library</a>
+- <a href="https://elthen.itch.io/">2D Artist</a>
 
 <br>
 <br>
 <p align="center">
-| 📺 <a href="https://www.youtube.com/channel/UC3ivOTE5EgpmF2DHLBmWIWg">My YouTube Channel</a>
-| 🌍 <a href="http://www.programmingwithnick.com">My Website</a> | <br>
+| 🌍 <a href="https://www.linkedin.com/in/miquelgalianallorca/">My LinkedIn</a> | <br>
+| 🐈 <a href="https://github.com/miquelgalianallorca">My GitHub</a>
 </p>
