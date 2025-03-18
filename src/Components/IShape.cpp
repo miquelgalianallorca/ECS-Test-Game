@@ -133,6 +133,10 @@ void S2DModel::Draw(const float& posX, const float& posY, const TColor& color)
 	
 	const std::string& currentAnimation = m_animations[m_currentAnimation];
 	Rectangle frameRectangle = spriteDataLoader.GetFrameRectangle(m_spriteSheet, currentAnimation, m_currentFrameIndex);
+	if (m_bFlippedX)
+	{
+		frameRectangle.width *= -1;
+	}
 
 	// Draw sprite
 	Vector2 pivot{ 0.f, 0.f };

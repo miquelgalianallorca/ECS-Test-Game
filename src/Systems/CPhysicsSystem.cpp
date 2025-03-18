@@ -12,7 +12,7 @@
 #include <cmath> // for sqrt
 
 const float EPSILON = 0.0005f;
-const float DRAG = 250.f;
+const float DRAG = 400.f;
 
 //------------------------------------------------------------------
 void CPhysicsSystem::Init()

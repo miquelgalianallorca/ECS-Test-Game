@@ -51,6 +51,7 @@ struct S2DModel : public IShape
 	std::string m_spriteSheet;
 	float m_sizeX{ 0.f };
 	float m_sizeY{ 0.f };
+	bool m_bFlippedX{ false };
 
 	// Framerate of the animation
 	// Improvement: Change running animation speed depending on character speed?
