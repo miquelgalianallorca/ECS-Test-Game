@@ -19,9 +19,9 @@ void CGraphicsSystem::Init()
 	CEntityComponentSystem& entityComponentSystem = CGame::GetInstance().GetEntityComponentSystem();
 
 	ComponentMask graphicsSystemComponentMask;
-	graphicsSystemComponentMask.set(entityComponentSystem.GetComponentId<SComponentTransform>());
-	graphicsSystemComponentMask.set(entityComponentSystem.GetComponentId<SComponentRenderable>());
 	graphicsSystemComponentMask.set(entityComponentSystem.GetComponentId<SComponentCollider>());
+	graphicsSystemComponentMask.set(entityComponentSystem.GetComponentId<SComponentRenderable>());
+	graphicsSystemComponentMask.set(entityComponentSystem.GetComponentId<SComponentTransform>());
 	
 	entityComponentSystem.SetSystemComponentMask<CGraphicsSystem>(graphicsSystemComponentMask);
 

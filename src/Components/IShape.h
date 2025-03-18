@@ -55,6 +55,7 @@ struct S2DModel : public IShape
 	// Framerate of the animation
 	// Improvement: Change running animation speed depending on character speed?
 	float m_frameLength{ 0.125f }; // 8 FPS
+	float m_timeSinceLastFrame{ 0.f };
 
 	// Animation names mapped to each EAnimationType
 	std::unordered_map<EAnimationType, std::string> m_animations; 

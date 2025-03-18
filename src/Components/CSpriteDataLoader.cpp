@@ -75,8 +75,8 @@ Rectangle CSpriteDataLoader::GetFrameRectangle(const std::string& spriteSheetNam
 
 	// Verify the frame index exists for that Animation
 	assert(frameIndex < animation.m_numSprites);
-	uint8_t paddingX = spriteSheet.m_padding * (frameIndex + 1);
-	uint8_t paddingY = spriteSheet.m_padding * (animation.m_row + 1);
+	uint8_t paddingX = 0;//spriteSheet.m_padding * (frameIndex + 1);
+	uint8_t paddingY = 0;//spriteSheet.m_padding * (animation.m_row + 1);
 	Rectangle frameRectangle
 	{
 		static_cast<float>(frameIndex * spriteSheet.m_spriteSizeX) + paddingX,      /*x*/
@@ -85,4 +85,18 @@ Rectangle CSpriteDataLoader::GetFrameRectangle(const std::string& spriteSheetNam
 		static_cast<float>(spriteSheet.m_spriteSizeY)                               /*height*/
 	};
 	return frameRectangle;
+}
+
+//------------------------------------------------------------------
+uint8_t CSpriteDataLoader::GetNumSpritesInAnimation(const std::string& spriteSheetName, const std::string& animationName) const
+{
+	// Verify the Spritesheet is available
+	assert(m_spriteSheets.find(spriteSheetName) != m_spriteSheets.end());
+	const SSpriteSheet& spriteSheet = m_spriteSheets.at(spriteSheetName);
+
+	// Verify the Animation is available
+	assert(spriteSheet.m_animations.find(animationName) != spriteSheet.m_animations.end());
+	const SAnimation& animation = spriteSheet.m_animations.at(animationName);
+
+	return animation.m_numSprites;
 }

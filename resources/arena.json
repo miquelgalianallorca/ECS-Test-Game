@@ -22,14 +22,14 @@
 				{ "name": "transform", "posX": 0.0, "posY": 0.0, "rot": 0.0 },
 				{
 					"name": "collider", "offsetX": 0.0, "offsetY": 0.0, "velocityX": 0.0, "velocityY": 0.0 ,
-					"shape": { "type": "rectangle", "sizeX": 100.0, "sizeY": 100.0 },
+					"shape": { "type": "rectangle", "sizeX": 120.0, "sizeY": 120.0 },
 					"dragEnabled": true
 				},
 				{
 					"name": "renderable",  "offsetX": 0.0, "offsetY": 0.0,  "r": 255, "g": 0, "b": 0, "a": 255, "layer": 0,
 					"shape":
 					{
-						"type": "2dmodel", "sizeX": 100.0, "sizeY": 100.0, "frameLength": 0.125, "spritesheet": "leader",
+						"type": "2dmodel", "sizeX": 120.0, "sizeY": 120.0, "frameLength": 0.125, "spritesheet": "leader",
 						"animations" :
 						[
 							{ "type": "idle",   "name": "idle" },
@@ -41,7 +41,7 @@
 					}
 				},
 				{
-					"name":"player", "maxSpeed": 250.0, "movementAcceleration": 200.0
+					"name":"player", "maxSpeed": 250.0, "movementAcceleration": 300.0
 				}
 			]
 		}

@@ -17,6 +17,7 @@ public:
 
 	const Texture2D& GetTexture(const std::string& spriteSheetName) const;
 	Rectangle GetFrameRectangle(const std::string& spriteSheetName, const std::string& animationName, uint8_t frameIndex) const;
+	uint8_t GetNumSpritesInAnimation(const std::string& spriteSheetName, const std::string& animationName) const;
 
 private:
 	//----------------------------------------------------------------

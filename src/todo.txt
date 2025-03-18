@@ -19,8 +19,7 @@
 		- move base on input (speed = distance/time)
 	- collider component: speed, collider shape
 		- don't move if after the move we would be colliding
-	- turn component: how much we've moved this turn
-	- character stats component: how much we can move per turn (speed attribute?)
+	- character stats component: health? speed? damage?
 
 
 
