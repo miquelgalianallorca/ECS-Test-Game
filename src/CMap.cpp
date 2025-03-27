@@ -1,5 +1,5 @@
 // Author: Miquel Galiana Llorca
-// Project: Larian Test
+// Project: ECS Test Game
 
 #include "CMap.h"
 #include "CGame.h"

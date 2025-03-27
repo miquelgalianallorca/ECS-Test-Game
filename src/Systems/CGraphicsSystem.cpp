@@ -1,5 +1,5 @@
 // Author: Miquel Galiana Llorca
-// Project: Larian Test
+// Project: ECS Test Game
 
 #include "CGraphicsSystem.h"
 
@@ -26,7 +26,7 @@ void CGraphicsSystem::Init()
 	entityComponentSystem.SetSystemComponentMask<CGraphicsSystem>(graphicsSystemComponentMask);
 
 	// Raylib
-	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Larian Test");
+	InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "ECS Test Game");
 
 	//Camera2D camera = { 0 };
   //camera.target = (Vector2){ player.x + 20.0f, player.y + 20.0f };
